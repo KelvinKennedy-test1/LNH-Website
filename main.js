@@ -1,6 +1,5 @@
 /* ===================================================
    Limuru Nursing Home — LNH3.JS
-   Author: Kelvin Kennedy  
    Features: hero slideshow (auto + manual + Ken Burns),
              dropdown, mobile menu, scroll-spy, stats
              counter, appointment form, back-to-top,
@@ -250,12 +249,7 @@ if (bookBtn && appointmentSec) {
 
 /* ══════════════════════════════════════════
    ── APPOINTMENT FORM (FORMSPREE) ──
-   Sends directly to ototokelvin180@gmail.com
-   Steps:
-     1. Go to https://formspree.io and sign up (free)
-     2. Create a new form → set email to ototokelvin180@gmail.com
-     3. Copy your Form ID (looks like: xpzgkwqr)
-     4. Paste it in FORMSPREE_ID below
+   Sends directly to info@limurunursinghome.co.ke
 ══════════════════════════════════════════ */
 
 var FORMSPREE_ID = 'https://formspree.io/f/xwvzlgaa'; // ← only thing you need to change
@@ -293,7 +287,7 @@ if (apptForm) {
         var btn = apptForm.querySelector('button[type="submit"]');
         if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
 
-        // Send to Formspree → delivered to ototokelvin180@gmail.com
+        // Send to Formspree → delivered to info@limurunursinghome.co.ke
         fetch(FORMSPREE_ID, {
             method: 'POST',
             headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
