@@ -585,7 +585,7 @@ nav a:hover, nav a.active {
 }
 
 .card--has-gallery::after {
-  content: "View Gallery →";
+  content: "Equipment Gallery →";
   display: block;
   margin-top: 12px;
   font-size: 12px;
