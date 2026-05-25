@@ -573,7 +573,7 @@ function updateDots(active) {
 function startAuto() {
   stopAuto();
   if (currentImages.length > 1) {
-    autoTimer = setInterval(() => goTo(currentIndex + 1), 4000);
+    autoTimer = setInterval(() => goTo(currentIndex + 1), 8000);
   }
 }
 function stopAuto() {
