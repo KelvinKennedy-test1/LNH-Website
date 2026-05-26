@@ -431,32 +431,32 @@ if (cards.length) {
 
 const SERVICE_IMAGES = {
   laboratory: [
-    { src: "./images/lab1.jpeg", alt: "Kwa Patel Laboratory Entrance" },
-    { src: "./images/lab2.jpeg", alt: "Laboratory Equipment" },
-    { src: "./images/lab3.jpeg", alt: "Laboratory Interior" },
+    { src: "./lab1.jpeg", alt: "Kwa Patel Laboratory Entrance" },
+    { src: "./lab2.jpeg", alt: "Laboratory Equipment" },
+    { src: "./lab3.jpeg", alt: "Laboratory Interior" },
   ],
   orthopaedic: [
-    { src: "./images/ortho1.jpeg", alt: "Orthopaedic Theatre - Overview" },
-    { src: "./images/ortho2.jpeg", alt: "Orthopaedic Theatre - C-Arm & Equipment" },
-    { src: "./images/ortho3.jpeg", alt: "Orthopaedic Theatre - Operating Table" },
-    { src: "./images/ortho4.jpeg", alt: "Orthopaedic Theatre - Surgical Lights" },
+    { src: "./ortho1.jpeg", alt: "Orthopaedic Theatre - Overview" },
+    { src: "./ortho2.jpeg", alt: "Orthopaedic Theatre - C-Arm & Equipment" },
+    { src: "./ortho3.jpeg", alt: "Orthopaedic Theatre - Operating Table" },
+    { src: "./ortho4.jpeg", alt: "Orthopaedic Theatre - Surgical Lights" },
   ],
   chemist: [
-    { src: "./images/chemist.jpeg", alt: "Kwa Patel Chemist - 24hrs Pharmacy" },
+    { src: "./chemist.jpeg", alt: "Kwa Patel Chemist - 24hrs Pharmacy" },
   ],
   outpatient: [
-    { src: "./Images/sectionA.jpeg"},
-    { src: "./Images/sectionB.jpeg"},
+    { src: "./sectionA.jpeg"},
+    { src: "./sectionB.jpeg"},
   ],
   paediatrics: [
-    { src: "./Images/sectionA.jpeg"},
-    { src: "./Images/sectionB.jpeg"},
-    { src: "./Images/sectionC.jpeg"},
-    { src: "./Images/sectionD.jpeg"},
-    { src: "./Images/sectionE.jpeg"},
-    { src: "./Images/sectionF.jpeg"},
-    { src: "./Images/sectionG.jpeg"},
-    { src: "./Images/sectionH.jpeg"},
+    { src: "./sectionA.jpeg"},
+    { src: "./sectionB.jpeg"},
+    { src: "./sectionC.jpeg"},
+    { src: "./sectionD.jpeg"},
+    { src: "./sectionE.jpeg"},
+    { src: "./sectionF.jpeg"},
+    { src: "./sectionG.jpeg"},
+    { src: "./sectionH.jpeg"},
   ],
 
 };
