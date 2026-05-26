@@ -266,11 +266,11 @@ if (bookBtn && appointmentSec) {
 
 
 /* ══════════════════════════════════════════
-   ── APPOINTMENT FORM (FORMSPREE) ──
+   ── APPOINTMENT FORM ──
    Sends directly to info@limurunursinghome.co.ke
 ══════════════════════════════════════════ */
 
-var WEB3FORMS_KEY = 'd02c1e54-3102-4926-9643-01c572b908c6';/* Include that of lnh */
+var WEB3FORMS_KEY = 'ad7c24f9-97ce-45d4-80cf-020a49a083d8';/* From lnh web3form */
 
 var apptForm   = document.getElementById('appointmentForm');
 var successMsg = document.getElementById('apptSuccess');
