@@ -270,7 +270,7 @@ if (bookBtn && appointmentSec) {
    Sends directly to info@limurunursinghome.co.ke
 ══════════════════════════════════════════ */
 
-var FORMSPREE_ID = 'https://formspree.io/f/xwvzlgaa'; 
+var WEB3FORMS_KEY = 'd02c1e54-3102-4926-9643-01c572b908c6';/* Include that of lnh */
 
 var apptForm   = document.getElementById('appointmentForm');
 var successMsg = document.getElementById('apptSuccess');
@@ -295,6 +295,12 @@ if (apptForm) {
         var time    = document.getElementById('apptTime').value;
         var notes   = document.getElementById('notes').value.trim() || 'None';
 
+        // Format date from yyyy-mm-dd to dd/mm/yy
+        var formattedDate = (function(d) {
+            var parts = d.split('-');
+            return parts[2] + '/' + parts[1] + '/' + parts[0];
+        })(date);
+
         // Validation
         if (!name || !phone || !service || !date || !time) {
             alert('Please fill all required fields.');
@@ -305,33 +311,36 @@ if (apptForm) {
         var btn = apptForm.querySelector('button[type="submit"]');
         if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
 
-        // Send to Formspree → delivered to info@limurunursinghome.co.ke
-        fetch(FORMSPREE_ID, {
+        // Send via Web3Forms → delivered to info@limurunursinghome.co.ke
+        fetch('https://api.web3forms.com/submit', {
             method: 'POST',
             headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
             body: JSON.stringify({
+                access_key:   WEB3FORMS_KEY,
+                subject:      'New Appointment Request – Limuru Nursing Home',
                 'Full Name':  name,
                 'Phone':      phone,
                 'Email':      email,
                 'Service':    service,
-                'Date':       date,
+                'Date':       formattedDate,
                 'Time':       time,
                 'Notes':      notes
             })
         })
         .then(function (response) {
-            if (response.ok) {
+            return response.json();
+        })
+        .then(function (data) {
+            if (data.success) {
                 // Show success UI
                 apptForm.style.display = 'none';
                 if (successMsg) successMsg.style.display = 'flex';
             } else {
-                return response.json().then(function (data) {
-                    throw new Error(data.error || 'Submission failed');
-                });
+                throw new Error(data.message || 'Submission failed');
             }
         })
         .catch(function (error) {
-            console.error('Formspree error:', error);
+            console.error('Web3Forms error:', error);
             alert('Failed to send appointment. Please try again or call +254 720 519 777.');
             if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Submit Appointment Request'; }
         });
@@ -348,7 +357,6 @@ if (newApptBtn) {
         if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Submit Appointment Request'; }
     });
 }
-
 /* ══════════════════════════════════════════
    ── STATS COUNTER ANIMATION ──
 ══════════════════════════════════════════ */
