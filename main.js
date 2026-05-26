@@ -12,11 +12,11 @@
    ── HERO SLIDESHOW ──
 ══════════════════════════════════════════ */
 const slides = [
-  { src: "./Images/hero1.jpeg", caption: "Welcome to our hospital" },
-  { src: "./Images/hero2.jpeg", caption: "Dedicated medical team" },
-  { src: "./Images/hero3.jpeg", caption: "Compassionate patient care" },
-  { src: "./Images/hero4.jpeg"},
-  { src: "./Images/hero5.jpeg"},
+  { src: "./hero1.jpeg", caption: "Welcome to our hospital" },
+  { src: "./hero2.jpeg", caption: "Dedicated medical team" },
+  { src: "./hero3.jpeg", caption: "Compassionate patient care" },
+  { src: "./hero4.jpeg"},
+  { src: "./hero5.jpeg"},
 
 
 ];
