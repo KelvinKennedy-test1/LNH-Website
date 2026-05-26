@@ -584,7 +584,7 @@ nav a:hover, nav a.active {
 }
 
 .card--has-gallery::after {
-  content: "Equipment Gallery →";
+  content: "Gallery →";
   display: block;
   margin-top: 12px;
   font-size: 12px;
@@ -877,6 +877,11 @@ nav a:hover, nav a.active {
     text-transform: uppercase;
     opacity: 0.82;
     margin-top: 4px;
+}
+
+/* ── Live-location ── */
+.live-location{
+    background-color: #00b894;
 }
 
 /* ── CONTACT ── */
