@@ -448,6 +448,16 @@ const SERVICE_IMAGES = {
     { src: "./Images/sectionA.jpeg"},
     { src: "./Images/sectionB.jpeg"},
   ],
+   paediatrics: [
+    { src: "./Images/sectionA.jpeg"},
+    { src: "./Images/sectionB.jpeg"},
+    { src: "./Images/sectionC.jpeg"},
+    { src: "./Images/sectionD.jpeg"},
+    { src: "./Images/sectionE.jpeg"},
+    { src: "./Images/sectionF.jpeg"},
+    { src: "./Images/sectionG.jpeg"},
+    { src: "./Images/sectionH.jpeg"},
+  ],
 
 };
 
