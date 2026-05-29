@@ -270,7 +270,10 @@ if (bookBtn && appointmentSec) {
    Sends directly to info@limurunursinghome.co.ke
 ══════════════════════════════════════════ */
 
-var WEB3FORMS_KEY = 'ad7c24f9-97ce-45d4-80cf-020a49a083d8';/* From lnh web3form */
+var WEB3FORMS_KEY    = 'ad7c24f9-97ce-45d4-80cf-020a49a083d8';
+var EMAILJS_SERVICE  = 'service_z72ta1o';
+var EMAILJS_TEMPLATE = 'template_iq0e1wv';
+var EMAILJS_KEY      = 'c_30z16kdD65mwja-';
 
 var apptForm   = document.getElementById('appointmentForm');
 var successMsg = document.getElementById('apptSuccess');
@@ -281,6 +284,8 @@ var dateInput  = document.getElementById('apptDate');
 if (dateInput) {
     dateInput.setAttribute('min', new Date().toISOString().split('T')[0]);
 }
+// ── Initialize EmailJS once ───────────────────────────────────
+emailjs.init(EMAILJS_KEY);
 
 if (apptForm) {
     apptForm.addEventListener('submit', function (e) {
@@ -295,7 +300,7 @@ if (apptForm) {
         var time    = document.getElementById('apptTime').value;
         var notes   = document.getElementById('notes').value.trim() || 'None';
 
-        // Format date from yyyy-mm-dd to dd/mm/yy
+        // Format date from yyyy-mm-dd to dd/mm/yyyy
         var formattedDate = (function(d) {
             var parts = d.split('-');
             return parts[2] + '/' + parts[1] + '/' + parts[0];
@@ -307,40 +312,77 @@ if (apptForm) {
             return;
         }
 
+        // Email is required for auto-reply — warn if missing
+        if (!email) {
+            alert('Please enter your email address to receive a confirmation.');
+            return;
+        }
+
         // Disable submit button (prevent double-submit)
         var btn = apptForm.querySelector('button[type="submit"]');
         if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
 
-        // Send via Web3Forms → delivered to info@limurunursinghome.co.ke
-        fetch('https://api.web3forms.com/submit', {
+        // ── STEP 1: Send to Web3Forms (notifies nursing home) ──
+        var web3Promise = fetch('https://api.web3forms.com/submit', {
             method: 'POST',
             headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                access_key:   WEB3FORMS_KEY,
-                subject:      'New Appointment Request – Limuru Nursing Home',
-                'Full Name':  name,
-                'Phone':      phone,
-                'Email':      email,
-                'Service':    service,
-                'Date':       formattedDate,
-                'Time':       time,
-                'Notes':      notes
+                access_key:  WEB3FORMS_KEY,
+                subject:     'New Appointment Request – Limuru Nursing Home',
+                'Full Name': name,
+                'Phone':     phone,
+                'Email':     email,
+                'Service':   service,
+                'Date':      formattedDate,
+                'Time':      time,
+                'Notes':     notes
             })
         })
-        .then(function (response) {
-            return response.json();
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+            console.log('Web3Forms response:', data); // ← debug log
+            return data;
         })
-        .then(function (data) {
-            if (data.success) {
-                // Show success UI
+        .catch(function(err) {
+            console.error('Web3Forms failed:', err);  // ← debug log
+            throw err;
+        });
+
+         // ── STEP 2: Send auto-reply to visitor via EmailJS ────
+        var emailjsPromise = emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, {
+            to_email:  email,
+            to_name:   name,
+            from_name: 'Limuru Nursing Home',
+            reply_to:  email,
+            message:   "Thank you for reaching out! We'll get back to you within 24 hours.",
+            // Appointment details (use in template if you want)
+            appt_service: service,
+            appt_date:    formattedDate,
+            appt_time:    time,
+        })
+        .then(function(res) {
+            console.log('[EmailJS] Auto-reply sent to', email, '| Status:', res.status);
+            return res;
+        })
+        .catch(function(err) {
+            // Log but don't block success — Web3Forms is the critical path
+            console.error('[EmailJS] Auto-reply failed:', err);
+        });
+
+       
+        // ── Wait for both to complete ──
+        Promise.all([web3Promise, emailjsPromise])
+        .then(function(results) {
+            var web3Result = results[0];
+            if (web3Result.success) {
                 apptForm.style.display = 'none';
                 if (successMsg) successMsg.style.display = 'flex';
             } else {
-                throw new Error(data.message || 'Submission failed');
+                throw new Error(web3Result.message || 'Submission failed');
             }
         })
-        .catch(function (error) {
-            console.error('Web3Forms error:', error);
+        .catch(function(error) {
+            console.error('Submission error:', error);
             alert('Failed to send appointment. Please try again or call +254 720 519 777.');
             if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Submit Appointment Request'; }
         });
