@@ -203,19 +203,19 @@
             <form class="appt-form" id="appointmentForm" action="https://formspree.io/f/xwvzlgaa" method="post">
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="fullName">Full Name *</label>
+                        <label for="fullName">Full Name<span style="color: red;">*</span></label>
                         <input type="text" id="fullName" name="fullName" placeholder="e.g. John Kamau" required autocomplete="name">
                         <span class="field-error" id="err-fullName"></span>
                     </div>
                     <div class="form-group">
-                        <label for="phone">Phone Number *</label>
+                        <label for="phone">Phone Number<span style="color: red;">*</span></label>
                         <input type="tel" id="phone" name="phone" placeholder="+254 7XX XXX XXX" required autocomplete="tel">
                         <span class="field-error" id="err-phone"></span>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="email">Email Address</label>
+                        <label for="email">Email Address<span style="color: red;">*</span></label>
                         <input type="email" id="email" name="email" placeholder="your@email.com" autocomplete="email">
                         <span class="field-error" id="err-email"></span>
                     </div>
