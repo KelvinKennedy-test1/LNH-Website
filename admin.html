@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — Careers | Limuru Nursing Home</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+    :root {
+      --navy:   #1a2e4a;
+      --teal:   #0e9a8e;
+      --teal2:  #0b7b71;
+      --red:    #d93025;
+      --orange: #e65100;
+      --gray-100: #f5f7fa;
+      --gray-200: #e8ecf1;
+      --gray-400: #9aa5b4;
+      --gray-600: #4a5568;
+      --white:  #ffffff;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', sans-serif; background: var(--gray-100); color: var(--gray-600); min-height: 100vh; }
+
+    /* ── Login ── */
+    #loginScreen { display:flex; align-items:center; justify-content:center; min-height:100vh; background:var(--navy); }
+    .login-box { background:var(--white); border-radius:12px; padding:2.5rem 2rem; width:100%; max-width:380px; box-shadow:0 8px 32px rgba(0,0,0,.25); }
+    .login-box .logo { text-align:center; margin-bottom:1.5rem; }
+    .login-box .logo i { font-size:2rem; color:var(--teal); }
+    .login-box h2 { text-align:center; color:var(--navy); font-size:1.2rem; margin-bottom:.25rem; }
+    .login-box p  { text-align:center; font-size:.82rem; color:var(--gray-400); margin-bottom:1.5rem; }
+    .login-box label { display:block; font-size:.82rem; font-weight:600; color:var(--navy); margin-bottom:.35rem; }
+    .login-box input { width:100%; padding:.6rem .85rem; border:1.5px solid var(--gray-200); border-radius:7px; font-size:.9rem; margin-bottom:1rem; outline:none; transition:border-color .2s; }
+    .login-box input:focus { border-color:var(--teal); }
+    .login-btn { width:100%; padding:.75rem; background:var(--teal); color:var(--white); border:none; border-radius:8px; font-size:.95rem; font-weight:600; cursor:pointer; transition:background .2s; }
+    .login-btn:hover { background:var(--teal2); }
+    #loginError { display:none; color:var(--red); font-size:.82rem; text-align:center; margin-top:.75rem; }
+
+    /* ── App Shell ── */
+    #adminApp { display:none; }
+    header { background:var(--navy); color:var(--white); display:flex; align-items:center; justify-content:space-between; padding:.9rem 1.5rem; position:sticky; top:0; z-index:100; gap:.75rem; flex-wrap:wrap; }
+    .header-left { display:flex; align-items:center; gap:.75rem; }
+    .header-left i { font-size:1.4rem; color:var(--teal); }
+    .header-left span { font-weight:700; font-size:1rem; }
+    .header-left small { display:block; font-size:.72rem; color:var(--gray-400); font-weight:400; }
+    .header-right { display:flex; gap:.5rem; flex-wrap:wrap; align-items:center; }
+    .hdr-btn { background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2); color:var(--white); padding:.45rem .9rem; border-radius:6px; cursor:pointer; font-size:.82rem; transition:background .2s; display:flex; align-items:center; gap:.35rem; }
+    .hdr-btn:hover { background:rgba(255,255,255,.2); }
+    .hdr-btn.firebase-btn { border-color:rgba(255,167,38,.4); color:#ffca28; }
+    .hdr-btn.firebase-btn.connected { border-color:rgba(102,187,106,.4); color:#a5d6a7; }
+
+    main { max-width:960px; margin:0 auto; padding:1.5rem 1rem 3rem; }
+
+    /* ── Firebase banner ── */
+    #firebaseBanner { display:none; background:#fff8e1; border:1px solid #ffe082; border-radius:10px; padding:.9rem 1.1rem; margin-bottom:1.25rem; font-size:.84rem; color:#5d4037; display:flex; align-items:flex-start; gap:.75rem; }
+    #firebaseBanner i { color:#f57f17; margin-top:2px; flex-shrink:0; }
+    #firebaseBanner a { color:var(--teal); font-weight:600; }
+    #firebaseBanner.hidden { display:none !important; }
+
+    /* ── Stats bar ── */
+    .stats { display:flex; gap:.75rem; flex-wrap:wrap; margin-bottom:1.5rem; }
+    .stat-card { flex:1; min-width:120px; background:var(--white); border-radius:10px; padding:.9rem 1rem; box-shadow:0 1px 4px rgba(0,0,0,.07); display:flex; align-items:center; gap:.75rem; }
+    .stat-card i { font-size:1.4rem; }
+    .stat-card .val { font-size:1.5rem; font-weight:700; color:var(--navy); line-height:1; }
+    .stat-card .lbl { font-size:.72rem; color:var(--gray-400); }
+
+    /* ── Toolbar ── */
+    .toolbar { display:flex; align-items:center; gap:.75rem; flex-wrap:wrap; margin-bottom:1rem; }
+    .toolbar h2 { flex:1; font-size:1rem; color:var(--navy); }
+    .btn-add { background:var(--teal); color:var(--white); border:none; border-radius:8px; padding:.55rem 1rem; font-size:.85rem; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:.4rem; transition:background .2s; }
+    .btn-add:hover { background:var(--teal2); }
+
+    /* ── Listing cards ── */
+    #listingsContainer { display:flex; flex-direction:column; gap:.75rem; }
+    .listing-row { background:var(--white); border-radius:10px; padding:1rem 1.1rem; box-shadow:0 1px 4px rgba(0,0,0,.07); display:flex; align-items:flex-start; gap:.75rem; cursor:grab; transition:box-shadow .2s, opacity .2s; user-select:none; }
+    .listing-row:active { cursor:grabbing; }
+    .listing-row.dragging { opacity:.45; box-shadow:0 8px 24px rgba(0,0,0,.18); }
+    .listing-row.drag-over { box-shadow:0 0 0 2px var(--teal); }
+    .drag-handle { color:var(--gray-400); font-size:.95rem; padding-top:2px; flex-shrink:0; cursor:grab; }
+    .listing-row .lbadge { display:inline-block; padding:.25rem .6rem; border-radius:20px; font-size:.7rem; font-weight:700; white-space:nowrap; flex-shrink:0; }
+    .badge-job    { background:#e8f5ff; color:#1565c0; }
+    .badge-intern { background:#f0fff4; color:#2e7d32; }
+    .badge-attach { background:#fff8e1; color:#f57f17; }
+    .listing-info { flex:1; min-width:0; }
+    .listing-info h3 { font-size:.95rem; color:var(--navy); margin-bottom:.2rem; }
+    .listing-meta { font-size:.78rem; color:var(--gray-400); display:flex; flex-wrap:wrap; gap:.5rem; }
+    .listing-meta span { display:flex; align-items:center; gap:.2rem; }
+    .draft-badge { background:#fff3e0; color:var(--orange); font-size:.68rem; font-weight:700; padding:.15rem .45rem; border-radius:20px; margin-left:.35rem; }
+    .listing-actions { display:flex; gap:.5rem; flex-shrink:0; flex-wrap:wrap; }
+    .btn-edit, .btn-del, .btn-toggle { border:none; border-radius:6px; padding:.38rem .7rem; font-size:.78rem; cursor:pointer; transition:.2s; display:flex; align-items:center; gap:.25rem; }
+    .btn-edit   { background:var(--gray-100); color:var(--navy); }
+    .btn-edit:hover { background:#dbeafe; color:#1565c0; }
+    .btn-toggle { background:#fff8e1; color:var(--orange); }
+    .btn-toggle:hover { background:#ffe0b2; }
+    .btn-toggle.published { background:#f0fff4; color:#2e7d32; }
+    .btn-toggle.published:hover { background:#c8e6c9; }
+    .btn-del    { background:#fff5f5; color:var(--red); }
+    .btn-del:hover { background:#fecaca; }
+
+    /* ── Modal ── */
+    .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:200; align-items:center; justify-content:center; padding:1rem; }
+    .modal-overlay.open { display:flex; }
+    .modal { background:var(--white); border-radius:12px; width:100%; max-width:580px; max-height:90vh; overflow-y:auto; box-shadow:0 16px 48px rgba(0,0,0,.25); }
+    .modal-header { padding:1.1rem 1.25rem; border-bottom:1px solid var(--gray-200); display:flex; align-items:center; justify-content:space-between; }
+    .modal-header h3 { font-size:1rem; color:var(--navy); }
+    .modal-close { background:none; border:none; font-size:1.1rem; color:var(--gray-400); cursor:pointer; }
+    .modal-body { padding:1.25rem; }
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:.75rem; margin-bottom:.75rem; }
+    .form-group { display:flex; flex-direction:column; gap:.3rem; }
+    .form-group.full { grid-column:1 / -1; }
+    .form-group label { font-size:.8rem; font-weight:600; color:var(--navy); }
+    .form-group input, .form-group select, .form-group textarea { padding:.55rem .75rem; border:1.5px solid var(--gray-200); border-radius:7px; font-size:.87rem; outline:none; font-family:inherit; transition:border-color .2s; }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color:var(--teal); }
+    .form-group textarea { resize:vertical; min-height:80px; }
+    .reqs-hint { font-size:.75rem; color:var(--gray-400); margin-top:.2rem; }
+    .status-row { display:flex; align-items:center; gap:.75rem; margin-bottom:.75rem; }
+    .status-row label { font-size:.82rem; font-weight:600; color:var(--navy); }
+    .toggle-switch { position:relative; width:40px; height:22px; }
+    .toggle-switch input { opacity:0; width:0; height:0; }
+    .toggle-slider { position:absolute; inset:0; background:var(--gray-200); border-radius:22px; cursor:pointer; transition:.2s; }
+    .toggle-slider:before { content:''; position:absolute; width:16px; height:16px; left:3px; top:3px; background:var(--white); border-radius:50%; transition:.2s; }
+    .toggle-switch input:checked + .toggle-slider { background:var(--teal); }
+    .toggle-switch input:checked + .toggle-slider:before { transform:translateX(18px); }
+    .status-label { font-size:.82rem; color:var(--gray-600); }
+    .modal-footer { padding:1rem 1.25rem; border-top:1px solid var(--gray-200); display:flex; justify-content:flex-end; gap:.75rem; }
+    .btn-cancel { background:var(--gray-100); color:var(--gray-600); border:none; border-radius:8px; padding:.55rem 1rem; font-size:.87rem; cursor:pointer; }
+    .btn-save { background:var(--teal); color:var(--white); border:none; border-radius:8px; padding:.55rem 1.1rem; font-size:.87rem; font-weight:600; cursor:pointer; transition:background .2s; }
+    .btn-save:hover { background:var(--teal2); }
+
+    /* ── Firebase modal ── */
+    .firebase-setup { font-size:.85rem; line-height:1.7; }
+    .firebase-setup h4 { color:var(--navy); font-size:.9rem; margin-bottom:.5rem; }
+    .firebase-setup ol { padding-left:1.2rem; margin-bottom:1rem; }
+    .firebase-setup li { margin-bottom:.35rem; }
+    .firebase-setup code { background:var(--gray-100); padding:.1rem .35rem; border-radius:4px; font-size:.82rem; font-family:monospace; }
+    .firebase-setup a { color:var(--teal); }
+    .firebase-input-row { display:flex; flex-direction:column; gap:.5rem; margin-top:.75rem; }
+    .firebase-input-row label { font-size:.8rem; font-weight:600; color:var(--navy); }
+    .firebase-input-row input { padding:.55rem .75rem; border:1.5px solid var(--gray-200); border-radius:7px; font-size:.87rem; outline:none; font-family:monospace; }
+    .firebase-input-row input:focus { border-color:var(--teal); }
+    #fbStatus { font-size:.8rem; margin-top:.5rem; min-height:1.2em; }
+
+    /* ── Import modal ── */
+    .import-area { border:2px dashed var(--gray-200); border-radius:10px; padding:1.5rem; text-align:center; margin-bottom:.75rem; cursor:pointer; transition:border-color .2s; }
+    .import-area:hover { border-color:var(--teal); }
+    .import-area i { font-size:2rem; color:var(--gray-400); margin-bottom:.5rem; display:block; }
+    .import-area p { font-size:.85rem; color:var(--gray-400); }
+    #importFileInput { display:none; }
+    #importPreview { font-size:.82rem; color:var(--gray-600); background:var(--gray-100); padding:.65rem .85rem; border-radius:7px; margin-bottom:.75rem; display:none; }
+
+    /* ── Confirm ── */
+    .confirm-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:300; align-items:center; justify-content:center; padding:1rem; }
+    .confirm-overlay.open { display:flex; }
+    .confirm-box { background:var(--white); border-radius:12px; padding:1.75rem 1.5rem; max-width:340px; width:100%; text-align:center; box-shadow:0 12px 40px rgba(0,0,0,.2); }
+    .confirm-box i { font-size:2rem; color:var(--red); margin-bottom:.75rem; }
+    .confirm-box h3 { color:var(--navy); margin-bottom:.5rem; }
+    .confirm-box p  { font-size:.85rem; color:var(--gray-600); margin-bottom:1.25rem; }
+    .confirm-actions { display:flex; gap:.75rem; justify-content:center; }
+    .btn-confirm-del { background:var(--red); color:var(--white); border:none; border-radius:8px; padding:.55rem 1.1rem; font-size:.87rem; font-weight:600; cursor:pointer; }
+
+    /* ── Toast ── */
+    #toast { position:fixed; bottom:1.5rem; right:1.5rem; background:var(--navy); color:var(--white); padding:.65rem 1.1rem; border-radius:8px; font-size:.85rem; display:flex; align-items:center; gap:.5rem; opacity:0; pointer-events:none; transition:opacity .3s; z-index:999; }
+    #toast.show { opacity:1; }
+    #toast i { color:var(--teal); }
+
+    .empty-state { text-align:center; padding:3rem 1rem; color:var(--gray-400); font-size:.9rem; }
+    .empty-state i { font-size:2.5rem; margin-bottom:.75rem; display:block; }
+
+    /* ── Firebase status dot in header ── */
+    .fb-dot { width:8px; height:8px; border-radius:50%; background:var(--gray-400); display:inline-block; }
+    .fb-dot.green { background:#66bb6a; }
+    .fb-dot.red   { background:var(--red); }
+  </style>
+</head>
+<body>
+
+<!-- ════ LOGIN ════ -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="logo"><i class="fa-solid fa-house-medical"></i></div>
+    <h2>Limuru Nursing Home</h2>
+    <p>Careers Admin Panel</p>
+    <label for="adminPass">Password</label>
+    <input type="password" id="adminPass" placeholder="Enter admin password" autocomplete="current-password" />
+    <button class="login-btn" onclick="doLogin()"><i class="fa-solid fa-lock-open"></i> Sign In</button>
+    <p id="loginError">Incorrect password. Please try again.</p>
+  </div>
+</div>
+
+<!-- ════ ADMIN APP ════ -->
+<div id="adminApp">
+  <header>
+    <div class="header-left">
+      <i class="fa-solid fa-house-medical"></i>
+      <div>
+        <span>Careers Admin</span>
+        <small>Limuru Nursing Home</small>
+      </div>
+    </div>
+    <div class="header-right">
+      <button class="hdr-btn firebase-btn" id="firebaseBtn" onclick="openFirebaseModal()">
+        <span class="fb-dot" id="fbDot"></span> Firebase Sync
+      </button>
+      <button class="hdr-btn" onclick="exportJSON()"><i class="fa-solid fa-file-export"></i> Export</button>
+      <button class="hdr-btn" onclick="openImportModal()"><i class="fa-solid fa-file-import"></i> Import</button>
+      <button class="hdr-btn" onclick="doLogout()"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+    </div>
+  </header>
+
+  <main>
+    <div id="statsBar" class="stats"></div>
+
+    <div class="toolbar">
+      <h2><i class="fa-solid fa-list-check"></i> Listings <span id="draftNote" style="font-size:.75rem;color:var(--gray-400);font-weight:400;"></span></h2>
+      <button class="btn-add" onclick="openForm()"><i class="fa-solid fa-plus"></i> Add Listing</button>
+    </div>
+
+    <div id="listingsContainer"></div>
+  </main>
+</div>
+
+<!-- ════ ADD / EDIT MODAL ════ -->
+<div class="modal-overlay" id="formOverlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="formTitle">Add New Listing</h3>
+      <button class="modal-close" onclick="closeForm()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div class="form-group"><label>Position Title *</label><input type="text" id="f-title" placeholder="e.g. Registered Nurse (RN)" /></div>
+        <div class="form-group"><label>Type *</label>
+          <select id="f-type">
+            <option value="">Select...</option>
+            <option value="job">Job Offer</option>
+            <option value="intern">Internship</option>
+            <option value="attach">Attachment</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Department *</label><input type="text" id="f-dept" placeholder="e.g. Nursing" /></div>
+        <div class="form-group"><label>Location</label><input type="text" id="f-location" placeholder="Limuru, Kiambu" /></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Time Commitment *</label><input type="text" id="f-time" placeholder="e.g. Full-time / 3 Months" /></div>
+        <div class="form-group"><label>Application Deadline *</label><input type="text" id="f-deadline" placeholder="e.g. 30 Jun 2026 or Rolling" /></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group full"><label>Description *</label><textarea id="f-desc" placeholder="Role overview and responsibilities..."></textarea></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group full">
+          <label>Requirements (one per line) *</label>
+          <textarea id="f-reqs" style="min-height:90px;" placeholder="NCK certificate&#10;2+ years clinical experience&#10;BCLS/ACLS certified"></textarea>
+          <span class="reqs-hint">Enter each requirement on a new line.</span>
+        </div>
+      </div>
+      <!-- Published toggle -->
+      <div class="status-row">
+        <label>Status</label>
+        <label class="toggle-switch"><input type="checkbox" id="f-published" checked /><span class="toggle-slider"></span></label>
+        <span class="status-label" id="statusLabel">Published — visible on site</span>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeForm()">Cancel</button>
+      <button class="btn-save" onclick="saveListing()"><i class="fa-solid fa-floppy-disk"></i> Save Listing</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════ FIREBASE MODAL ════ -->
+<div class="modal-overlay" id="firebaseOverlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h3><i class="fa-solid fa-fire" style="color:#f57f17"></i> Firebase Sync Setup</h3>
+      <button class="modal-close" onclick="closeFirebaseModal()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body firebase-setup">
+      <h4>One-time setup (free, ~2 minutes)</h4>
+      <ol>
+        <li>Go to <a href="https://console.firebase.google.com" target="_blank">console.firebase.google.com</a> and create a project (e.g. <code>limuru-nursing</code>).</li>
+        <li>In the left menu → <strong>Build → Realtime Database</strong> → Create database → choose a region → Start in <strong>test mode</strong>.</li>
+        <li>Click the <strong>gear icon → Project settings</strong> → scroll down to "Your apps" → click <strong>&lt;/&gt; Web</strong> → register the app.</li>
+        <li>Copy the <code>databaseURL</code> value (looks like <code>https://your-project-default-rtdb.firebaseio.com</code>) and paste it below.</li>
+      </ol>
+      <div class="firebase-input-row">
+        <label>Firebase Database URL</label>
+        <input type="text" id="fbUrl" placeholder="https://your-project-default-rtdb.firebaseio.com" />
+      </div>
+      <p id="fbStatus"></p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeFirebaseModal()">Cancel</button>
+      <button class="btn-save" onclick="saveFirebaseConfig()"><i class="fa-solid fa-plug"></i> Connect</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════ IMPORT MODAL ════ -->
+<div class="modal-overlay" id="importOverlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h3><i class="fa-solid fa-file-import"></i> Import Listings</h3>
+      <button class="modal-close" onclick="closeImportModal()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="import-area" onclick="document.getElementById('importFileInput').click()">
+        <i class="fa-solid fa-file-arrow-up"></i>
+        <p><strong>Click to choose</strong> a JSON backup file</p>
+        <p>Only .json files exported from this admin panel</p>
+      </div>
+      <input type="file" id="importFileInput" accept=".json" onchange="previewImport(event)" />
+      <div id="importPreview"></div>
+      <p style="font-size:.8rem;color:var(--red);"><i class="fa-solid fa-circle-info"></i> This will <strong>replace</strong> all current listings.</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeImportModal()">Cancel</button>
+      <button class="btn-save" id="importConfirmBtn" onclick="confirmImport()" disabled style="opacity:.5"><i class="fa-solid fa-file-import"></i> Import</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════ CONFIRM DELETE ════ -->
+<div class="confirm-overlay" id="confirmOverlay">
+  <div class="confirm-box">
+    <i class="fa-solid fa-triangle-exclamation"></i>
+    <h3>Delete Listing?</h3>
+    <p id="confirmMsg">This will permanently remove the listing.</p>
+    <div class="confirm-actions">
+      <button class="btn-cancel" onclick="closeConfirm()">Cancel</button>
+      <button class="btn-confirm-del" onclick="confirmDelete()"><i class="fa-solid fa-trash"></i> Delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════ TOAST ════ -->
+<div id="toast"><i class="fa-solid fa-circle-check"></i><span id="toastMsg"></span></div>
+
+<script>
+  /* ══════════════════════════════════════
+     CONFIG — change password here
+  ══════════════════════════════════════ */
+  var ADMIN_PASSWORD = 'LimNH2025!';
+  var STORAGE_KEY    = 'lnh_careers';
+  var SESSION_KEY    = 'lnh_admin_session';
+  var FB_URL_KEY     = 'lnh_fb_url';
+
+  /* ══════════════════════════════════════
+     AUTH
+  ══════════════════════════════════════ */
+  function doLogin() {
+    var pass = document.getElementById('adminPass').value;
+    if (pass === ADMIN_PASSWORD) {
+      sessionStorage.setItem(SESSION_KEY, '1');
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('adminApp').style.display = 'block';
+      document.getElementById('loginError').style.display = 'none';
+      loadUI();
+    } else {
+      document.getElementById('loginError').style.display = 'block';
+      document.getElementById('adminPass').focus();
+    }
+  }
+  document.getElementById('adminPass').addEventListener('keydown', function(e){ if(e.key==='Enter') doLogin(); });
+
+  function doLogout() { sessionStorage.removeItem(SESSION_KEY); location.reload(); }
+
+  if (sessionStorage.getItem(SESSION_KEY)) {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('adminApp').style.display = 'block';
+    loadUI();
+  }
+
+  /* ══════════════════════════════════════
+     LOCAL STORAGE
+  ══════════════════════════════════════ */
+  function getListings() {
+    try { var s = localStorage.getItem(STORAGE_KEY); return s ? JSON.parse(s) : []; } catch(e) { return []; }
+  }
+  function saveListings(arr) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
+    syncToFirebase(arr);
+  }
+
+  /* ══════════════════════════════════════
+     FIREBASE SYNC
+  ══════════════════════════════════════ */
+  var fbUrl = localStorage.getItem(FB_URL_KEY) || '';
+
+  function updateFbDot() {
+    var dot = document.getElementById('fbDot');
+    var btn = document.getElementById('firebaseBtn');
+    if (fbUrl) {
+      dot.className = 'fb-dot green';
+      btn.classList.add('connected');
+    } else {
+      dot.className = 'fb-dot';
+      btn.classList.remove('connected');
+    }
+  }
+
+  function syncToFirebase(arr) {
+    if (!fbUrl) return;
+    fetch(fbUrl.replace(/\/$/, '') + '/careers.json', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(arr)
+    }).catch(function(e){ console.warn('Firebase sync failed:', e); });
+  }
+
+  function openFirebaseModal() {
+    document.getElementById('fbUrl').value = fbUrl || '';
+    document.getElementById('fbStatus').textContent = fbUrl ? '✅ Currently connected to: ' + fbUrl : '';
+    document.getElementById('firebaseOverlay').classList.add('open');
+  }
+  function closeFirebaseModal() { document.getElementById('firebaseOverlay').classList.remove('open'); }
+
+  function saveFirebaseConfig() {
+    var url = document.getElementById('fbUrl').value.trim().replace(/\/$/, '');
+    var statusEl = document.getElementById('fbStatus');
+    if (!url) { statusEl.style.color='var(--red)'; statusEl.textContent='Please enter a valid URL.'; return; }
+    statusEl.style.color='var(--gray-600)'; statusEl.textContent='Testing connection…';
+    fetch(url + '/ping.json', { method: 'PUT', headers:{'Content-Type':'application/json'}, body: '"ok"' })
+    .then(function(r){ return r.json(); })
+    .then(function() {
+      fbUrl = url;
+      localStorage.setItem(FB_URL_KEY, fbUrl);
+      statusEl.style.color='#2e7d32'; statusEl.textContent='✅ Connected! Syncing listings now…';
+      updateFbDot();
+      syncToFirebase(getListings());
+      setTimeout(closeFirebaseModal, 1200);
+      showToast('Firebase connected & synced');
+    })
+    .catch(function() {
+      statusEl.style.color='var(--red)';
+      statusEl.textContent='❌ Could not reach that URL. Double-check it and that the database is in test mode.';
+    });
+  }
+
+  /* ══════════════════════════════════════
+     EXPORT / IMPORT
+  ══════════════════════════════════════ */
+  function exportJSON() {
+    var all = getListings();
+    var blob = new Blob([JSON.stringify(all, null, 2)], { type: 'application/json' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'lnh_careers_' + new Date().toISOString().slice(0,10) + '.json';
+    a.click();
+    showToast('Exported ' + all.length + ' listing' + (all.length!==1?'s':''));
+  }
+
+  var importData = null;
+
+  function openImportModal() {
+    importData = null;
+    document.getElementById('importFileInput').value = '';
+    document.getElementById('importPreview').style.display = 'none';
+    document.getElementById('importConfirmBtn').disabled = true;
+    document.getElementById('importConfirmBtn').style.opacity = '.5';
+    document.getElementById('importOverlay').classList.add('open');
+  }
+  function closeImportModal() { document.getElementById('importOverlay').classList.remove('open'); }
+
+  function previewImport(e) {
+    var file = e.target.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function(ev) {
+      try {
+        var parsed = JSON.parse(ev.target.result);
+        if (!Array.isArray(parsed)) throw new Error('Not an array');
+        importData = parsed;
+        var prev = document.getElementById('importPreview');
+        prev.style.display = 'block';
+        prev.innerHTML = '<i class="fa-solid fa-circle-check" style="color:var(--teal)"></i> Found <strong>' + parsed.length + ' listing' + (parsed.length!==1?'s':'') + '</strong> in ' + file.name;
+        document.getElementById('importConfirmBtn').disabled = false;
+        document.getElementById('importConfirmBtn').style.opacity = '1';
+      } catch(err) {
+        var prev = document.getElementById('importPreview');
+        prev.style.display = 'block';
+        prev.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:var(--red)"></i> Invalid file — make sure it\'s a JSON export from this panel.';
+        importData = null;
+      }
+    };
+    reader.readAsText(file);
+  }
+
+  function confirmImport() {
+    if (!importData) return;
+    saveListings(importData);
+    closeImportModal();
+    loadUI();
+    showToast('Imported ' + importData.length + ' listing' + (importData.length!==1?'s':''));
+  }
+
+  /* ══════════════════════════════════════
+     RENDER
+  ══════════════════════════════════════ */
+  function loadUI() {
+    updateFbDot();
+    renderStats();
+    renderListings();
+  }
+
+  function renderStats() {
+    var all     = getListings();
+    var pub     = all.filter(function(o){ return o.published !== false; });
+    var jobs    = pub.filter(function(o){ return o.type==='job'; }).length;
+    var interns = pub.filter(function(o){ return o.type==='intern'; }).length;
+    var attach  = pub.filter(function(o){ return o.type==='attach'; }).length;
+    var drafts  = all.length - pub.length;
+    document.getElementById('statsBar').innerHTML =
+      statCard('fa-briefcase-medical', pub.length, 'Published', '#1565c0') +
+      statCard('fa-hospital-user',     jobs,       'Job Offers', '#0b7b71') +
+      statCard('fa-graduation-cap',    interns,    'Internships', '#2e7d32') +
+      statCard('fa-certificate',       attach,     'Attachments', '#f57f17') +
+      (drafts ? statCard('fa-pen-ruler', drafts, 'Drafts', '#e65100') : '');
+    document.getElementById('draftNote').textContent = drafts ? '(' + drafts + ' draft' + (drafts>1?'s':'')+' hidden on site)' : '';
+  }
+
+  function statCard(icon, val, lbl, color) {
+    return '<div class="stat-card"><i class="fa-solid ' + icon + '" style="color:' + color + '"></i><div><div class="val">' + val + '</div><div class="lbl">' + lbl + '</div></div></div>';
+  }
+
+  function badgeClass(t) { return t==='job'?'badge-job':t==='intern'?'badge-intern':'badge-attach'; }
+  function badgeLabel(t) { return t==='job'?'Job Offer':t==='intern'?'Internship':'Attachment'; }
+
+  function renderListings() {
+    var all = getListings();
+    var el  = document.getElementById('listingsContainer');
+    if (!all.length) {
+      el.innerHTML = '<div class="empty-state"><i class="fa-solid fa-folder-open"></i>No listings yet. Click <strong>Add Listing</strong> to create one.</div>';
+      return;
+    }
+    el.innerHTML = all.map(function(o) {
+      var isDraft = o.published === false;
+      return '<div class="listing-row' + (isDraft?' draft':'') + '" draggable="true" data-id="' + o.id + '">' +
+        '<span class="drag-handle"><i class="fa-solid fa-grip-vertical"></i></span>' +
+        '<span class="lbadge ' + badgeClass(o.type) + '">' + badgeLabel(o.type) + '</span>' +
+        '<div class="listing-info">' +
+          '<h3>' + esc(o.title) + (isDraft ? '<span class="draft-badge">DRAFT</span>' : '') + '</h3>' +
+          '<div class="listing-meta">' +
+            '<span><i class="fa-solid fa-building-columns"></i>' + esc(o.dept) + '</span>' +
+            '<span><i class="fa-solid fa-clock"></i>' + esc(o.time) + '</span>' +
+            '<span><i class="fa-solid fa-calendar-days"></i>Deadline: ' + esc(o.deadline) + '</span>' +
+          '</div>' +
+        '</div>' +
+        '<div class="listing-actions">' +
+          '<button class="btn-toggle ' + (isDraft?'':'published') + '" onclick="togglePublished(' + o.id + ')">' +
+            (isDraft ? '<i class="fa-solid fa-eye-slash"></i> Draft' : '<i class="fa-solid fa-eye"></i> Live') +
+          '</button>' +
+          '<button class="btn-edit" onclick="openForm(' + o.id + ')"><i class="fa-solid fa-pen"></i> Edit</button>' +
+          '<button class="btn-del"  onclick="askDelete(' + o.id + ',\'' + esc(o.title).replace(/'/g,"\\'") + '\')"><i class="fa-solid fa-trash"></i></button>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+    initDragSort();
+  }
+
+  function esc(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  /* ══════════════════════════════════════
+     PUBLISHED TOGGLE
+  ══════════════════════════════════════ */
+  function togglePublished(id) {
+    var all = getListings().map(function(o) {
+      if (o.id !== id) return o;
+      return Object.assign({}, o, { published: o.published === false ? true : false });
+    });
+    saveListings(all);
+    loadUI();
+    var o = all.find(function(x){ return x.id === id; });
+    showToast('"' + o.title + '" ' + (o.published === false ? 'set to Draft' : 'Published'));
+  }
+
+  /* ══════════════════════════════════════
+     DRAG-TO-REORDER
+  ══════════════════════════════════════ */
+  var dragSrcId = null;
+
+  function initDragSort() {
+    var rows = document.querySelectorAll('.listing-row');
+    rows.forEach(function(row) {
+      row.addEventListener('dragstart', function(e) {
+        dragSrcId = parseInt(this.dataset.id);
+        this.classList.add('dragging');
+        e.dataTransfer.effectAllowed = 'move';
+      });
+      row.addEventListener('dragend', function() {
+        this.classList.remove('dragging');
+        document.querySelectorAll('.listing-row').forEach(function(r){ r.classList.remove('drag-over'); });
+      });
+      row.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+        document.querySelectorAll('.listing-row').forEach(function(r){ r.classList.remove('drag-over'); });
+        this.classList.add('drag-over');
+      });
+      row.addEventListener('drop', function(e) {
+        e.preventDefault();
+        var targetId = parseInt(this.dataset.id);
+        if (dragSrcId === targetId) return;
+        var all = getListings();
+        var srcIdx = all.findIndex(function(o){ return o.id === dragSrcId; });
+        var tgtIdx = all.findIndex(function(o){ return o.id === targetId; });
+        var moved = all.splice(srcIdx, 1)[0];
+        all.splice(tgtIdx, 0, moved);
+        saveListings(all);
+        renderListings();
+        renderStats();
+        showToast('Order saved');
+      });
+    });
+  }
+
+  /* ══════════════════════════════════════
+     FORM
+  ══════════════════════════════════════ */
+  var editingId = null;
+
+  // Update status label live
+  document.getElementById('f-published').addEventListener('change', function() {
+    document.getElementById('statusLabel').textContent = this.checked
+      ? 'Published — visible on site'
+      : 'Draft — hidden from site';
+  });
+
+  function openForm(id) {
+    editingId = id || null;
+    document.getElementById('formTitle').textContent = id ? 'Edit Listing' : 'Add New Listing';
+    if (id) {
+      var o = getListings().find(function(x){ return x.id === id; });
+      if (!o) return;
+      document.getElementById('f-title').value    = o.title;
+      document.getElementById('f-type').value     = o.type;
+      document.getElementById('f-dept').value     = o.dept;
+      document.getElementById('f-location').value = o.location;
+      document.getElementById('f-time').value     = o.time;
+      document.getElementById('f-deadline').value = o.deadline;
+      document.getElementById('f-desc').value     = o.desc;
+      document.getElementById('f-reqs').value     = (o.reqs || []).join('\n');
+      var pub = o.published !== false;
+      document.getElementById('f-published').checked = pub;
+      document.getElementById('statusLabel').textContent = pub ? 'Published — visible on site' : 'Draft — hidden from site';
+    } else {
+      ['f-title','f-dept','f-location','f-time','f-deadline','f-desc','f-reqs'].forEach(function(fid){ document.getElementById(fid).value=''; });
+      document.getElementById('f-type').value = '';
+      document.getElementById('f-published').checked = true;
+      document.getElementById('statusLabel').textContent = 'Published — visible on site';
+    }
+    document.getElementById('formOverlay').classList.add('open');
+  }
+
+  function closeForm() { document.getElementById('formOverlay').classList.remove('open'); }
+
+  function saveListing() {
+    var title    = document.getElementById('f-title').value.trim();
+    var type     = document.getElementById('f-type').value;
+    var dept     = document.getElementById('f-dept').value.trim();
+    var location = document.getElementById('f-location').value.trim() || 'Limuru, Kiambu';
+    var time     = document.getElementById('f-time').value.trim();
+    var deadline = document.getElementById('f-deadline').value.trim();
+    var desc     = document.getElementById('f-desc').value.trim();
+    var reqs     = document.getElementById('f-reqs').value.trim().split('\n').map(function(r){ return r.trim(); }).filter(Boolean);
+    var published = document.getElementById('f-published').checked;
+
+    if (!title || !type || !dept || !time || !deadline || !desc || !reqs.length) {
+      alert('Please fill in all required fields and at least one requirement.');
+      return;
+    }
+
+    var all = getListings();
+    if (editingId) {
+      all = all.map(function(o) {
+        if (o.id !== editingId) return o;
+        return { id:o.id, type:type, title:title, dept:dept, location:location, time:time, deadline:deadline, desc:desc, reqs:reqs, published:published };
+      });
+      showToast('Listing updated');
+    } else {
+      var newId = all.length ? Math.max.apply(null, all.map(function(o){ return o.id; })) + 1 : 1;
+      all.push({ id:newId, type:type, title:title, dept:dept, location:location, time:time, deadline:deadline, desc:desc, reqs:reqs, published:published });
+      showToast('Listing added' + (published ? '' : ' as Draft'));
+    }
+    saveListings(all);
+    closeForm();
+    loadUI();
+  }
+
+  /* ══════════════════════════════════════
+     DELETE
+  ══════════════════════════════════════ */
+  var pendingDeleteId = null;
+
+  function askDelete(id, title) {
+    pendingDeleteId = id;
+    document.getElementById('confirmMsg').textContent = 'This will permanently remove "' + title + '" from the careers page.';
+    document.getElementById('confirmOverlay').classList.add('open');
+  }
+  function closeConfirm() { document.getElementById('confirmOverlay').classList.remove('open'); pendingDeleteId = null; }
+  function confirmDelete() {
+    if (!pendingDeleteId) return;
+    var all = getListings().filter(function(o){ return o.id !== pendingDeleteId; });
+    saveListings(all);
+    showToast('Listing deleted');
+    closeConfirm();
+    loadUI();
+  }
+
+  /* ══════════════════════════════════════
+     TOAST
+  ══════════════════════════════════════ */
+  var toastTimer;
+  function showToast(msg) {
+    document.getElementById('toastMsg').textContent = msg;
+    var t = document.getElementById('toast');
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ t.classList.remove('show'); }, 2800);
+  }
+
+  /* ══════════════════════════════════════
+     KEYBOARD & OVERLAY CLICKS
+  ══════════════════════════════════════ */
+  document.addEventListener('keydown', function(e) {
+    if (e.key !== 'Escape') return;
+    closeForm(); closeConfirm(); closeFirebaseModal(); closeImportModal();
+  });
+  ['formOverlay','confirmOverlay','firebaseOverlay','importOverlay'].forEach(function(id) {
+    document.getElementById(id).addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeForm(); closeConfirm(); closeFirebaseModal(); closeImportModal();
+      }
+    });
+  });
+</script>
+</body>
+</html>
