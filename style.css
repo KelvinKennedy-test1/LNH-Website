@@ -459,7 +459,7 @@
     overflow-y: auto;
     animation: modalIn 0.25s ease;
   }
-  #galleryModal.open { display: block; }
+  #galleryModal.open { display: grid; }
   @keyframes modalIn { from { opacity:0; } to { opacity:1; } }
 
   .gallery-modal-box {
