@@ -459,13 +459,13 @@
     overflow-y: auto;
     animation: modalIn 0.25s ease;
   }
-  #galleryModal.open { display: grid; }
+  #galleryModal.open { display: block; }
   @keyframes modalIn { from { opacity:0; } to { opacity:1; } }
 
   .gallery-modal-box {
     background: #f7f9f8;
     min-height: 100vh;
-    max-width: 1280px;
+    max-width: 1580px;
     margin: 0 auto;
     position: relative;
     animation: slideUp 0.3s ease;
