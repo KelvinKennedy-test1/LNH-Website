@@ -465,7 +465,7 @@
   .gallery-modal-box {
     background: #f7f9f8;
     min-height: 100vh;
-    max-width: 100%;
+    max-width: 1280px;
     margin: 0 auto;
     position: relative;
     animation: slideUp 0.3s ease;
