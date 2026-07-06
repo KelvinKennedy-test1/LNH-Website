@@ -6,45 +6,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Limuru Nursing Home Ltd – Quality healthcare for everyone in Limuru and surrounding areas. Book appointments, emergency care, maternity, and more.">
     <meta name="theme-color" content="#0b3d91">
-    <!-- Open Graph / WhatsApp / Social preview -->
     <meta property="og:title" content="Limuru Nursing Home Ltd – Kwa Patel">
     <meta property="og:description" content="Trusted healthcare in Limuru for 40+ years. Maternity, Surgery, Emergency & more.">
-    <meta property="og:image" content="hero1.jpg">
+    <meta property="og:image" content="https://www.limurunursinghome.co.ke/hero1.jpg">
     <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.limurunursinghome.co.ke/">
+    <link rel="canonical" href="https://www.limurunursinghome.co.ke/">
     <title>Limuru Nursing Home Ltd | Kwa Patel</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Font Awesome Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <!-- Appointment Form -->
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-    <!--EmailJS insatallation-->
-    <script type="text/javascript"
-        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
-    </script>
-    <script type="text/javascript">
-        (function(){
-        emailjs.init({
-        publicKey: "c_30z16kdD65mwja-",
-         });
-         })();
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Hospital",
+      "name": "Limuru Nursing Home Ltd (Kwa Patel)",
+      "image": "https://www.limurunursinghome.co.ke/hero1.jpg",
+      "url": "https://www.limurunursinghome.co.ke/",
+      "telephone": ["+254720519777", "+254708244911"],
+      "email": "info@limurunursinghome.co.ke",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Viazi House, Gitungo Road",
+        "addressLocality": "Limuru",
+        "addressCountry": "KE"
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+        "opens": "00:00",
+        "closes": "23:59"
+      },
+      "medicalSpecialty": ["Obstetrics", "Gynecology", "Orthopedic Surgery", "General Surgery", "Urology", "Emergency Care"],
+      "sameAs": ["https://www.facebook.com/p/Limuru-Nursing-HOME-ltd-KWA-PATEL-100062970108708/"]
+    }
     </script>
 </head>
-<body oncontextmenu="return false">
-<!-- ── NAVBAR ── -->
+<body data-page="index">
+
 <nav id="mainNav">
   <div class="logo">
-    <img src="logo.png" alt="" height="20" width="20">Limuru Nursing Home LTD 
+    <img src="logo.png" alt="Limuru Nursing Home logo" height="40" width="40" loading="lazy">Limuru Nursing Home LTD 
     <h6><i>(&nbsp;KWA PATEL&nbsp;)</i></h6>
   </div>
   <button class="hamburger" id="hamburger" aria-label="Toggle menu">
     <span></span><span></span><span></span>
   </button>
   <ul id="navMenu">
-    <li><a href="#home" class="nav-link active" data-section="home">Home</a></li>
+    <li><a href="index.html" class="nav-link" data-page="index">Home</a></li>
 
     <!-- ABOUT -->
     <li class="nav-dropdown" id="aboutDropdown">
-      <a href="#about" class="nav-link-dropdown" data-section="about">
+      <a href="about.html" class="nav-link-dropdown" data-page="about">
         About <i class="fa-solid fa-chevron-down chevron"></i>
       </a>
       <div class="dropdown-panel about-panel">
@@ -59,11 +75,11 @@
             <ul class="dp-list">
               <li><i class="fa-solid fa-location-dot"></i> Viazi House, Gitungo Road, Limuru Town</li>
               <li><i class="fa-solid fa-map-pin"></i> Opp. Naivas Supermarket</li>
+              <li><i class="fa-solid fa-envelope-open-text"></i> P.O. Box 359 - 00217, Limuru</li>
               <li><i class="fa-solid fa-phone"></i> +254 720 519 777</li>
               <li><i class="fa-solid fa-phone"></i> +254 708 244 911</li>
               <li><i class="fa-solid fa-envelope"></i> <a href="mailto:info@limurunursinghome.co.ke">info@limurunursinghome.co.ke</a></li>
               <li><i class="fa-solid fa-envelope"></i> <a href="mailto:limuru.nursinghome@yahoo.com">limuru.nursinghome@yahoo.com</a></li>
-
             </ul>
           </div>
           <div class="dp-block">
@@ -73,13 +89,14 @@
               <li><i class="fa-solid fa-hand-holding-heart"></i> Saturday: 24hr Support</li>
               <li><i class="fa-solid fa-clock"></i> Sunday: Open 24hrs</li>
             </ul>
+          </div>
         </div>
       </div>
     </li>
 
     <!-- SERVICES -->
     <li class="nav-dropdown" id="servicesDropdown">
-      <a href="#services" class="nav-link-dropdown" data-section="services">
+      <a href="services.html" class="nav-link-dropdown" data-page="services">
         Services <i class="fa-solid fa-chevron-down chevron"></i>
       </a>
       <div class="dropdown-panel services-panel">
@@ -87,16 +104,16 @@
           <div class="dp-block">
             <h4><i class="fa-solid fa-stethoscope"></i> Our Services</h4>
             <ul class="dp-list">
-              <li><a href="#outpatient" class="dp-link service-jump-link"><i class="fa-solid fa-circle-check"></i> Outpatient Consultation</a></li>
-              <li><a href="#laboratory" class="dp-link service-jump-link"><i class="fa-solid fa-circle-check"></i> Laboratory &amp; Diagnostics</a></li>
-              <li><a href="#maternity" class="dp-link service-jump-link"><i class="fa-solid fa-circle-check"></i> Maternity Section</a></li>
-              <li><a href="#obstetrics" class="dp-link service-jump-link"><i class="fa-solid fa-circle-check"></i> Obstetrics &amp; Gynaecology</a></li>
-              <li><a href="#orthopaedic" class="dp-link service-jump-link"><i class="fa-solid fa-circle-check"></i> X-Ray &amp; Orthopaedic Surgery</a></li>
-              <li><a href="#surgery" class="dp-link service-jump-link"><i class="fa-solid fa-circle-check"></i> General Surgery</a></li>
-              <li><a href="#urology" class="dp-link service-jump-link"><i class="fa-solid fa-circle-check"></i> Urology Care</a></li>
-              <li><a href="#emergency" class="dp-link service-jump-link"><i class="fa-solid fa-circle-check"></i> Emergency Care</a></li>
+              <li><a href="services.html#outpatient" class="dp-link service-jump-link"><i class="fa-solid fa-circle-check"></i> Outpatient Consultation</a></li>
+              <li><a href="services.html#laboratory" class="dp-link service-jump-link"><i class="fa-solid fa-circle-check"></i> Laboratory &amp; Diagnostics</a></li>
+              <li><a href="services.html#maternity" class="dp-link service-jump-link"><i class="fa-solid fa-circle-check"></i> Maternity Section</a></li>
+              <li><a href="services.html#obstetrics" class="dp-link service-jump-link"><i class="fa-solid fa-circle-check"></i> Obstetrics &amp; Gynaecology</a></li>
+              <li><a href="services.html#orthopaedic" class="dp-link service-jump-link"><i class="fa-solid fa-circle-check"></i> X-Ray &amp; Orthopaedic Surgery</a></li>
+              <li><a href="services.html#surgery" class="dp-link service-jump-link"><i class="fa-solid fa-circle-check"></i> General Surgery</a></li>
+              <li><a href="services.html#urology" class="dp-link service-jump-link"><i class="fa-solid fa-circle-check"></i> Urology Care</a></li>
+              <li><a href="services.html#emergency" class="dp-link service-jump-link"><i class="fa-solid fa-circle-check"></i> Emergency Care</a></li>
             </ul>
-            <a href="#services" class="dp-see-all">View All Services ↓</a>
+            <a href="services.html" class="dp-see-all">View All Services ↓</a>
           </div>
         </div>
       </div>
@@ -104,7 +121,7 @@
 
     <!-- OUR TEAM -->
     <li class="nav-dropdown" id="teamDropdown">
-      <a href="#team" class="nav-link-dropdown" data-section="team">
+      <a href="team.html" class="nav-link-dropdown" data-page="team">
         Our Team <i class="fa-solid fa-chevron-down chevron"></i>
       </a>
       <div class="dropdown-panel">
@@ -112,30 +129,30 @@
           <div class="dp-block">
             <h4><i class="fa-solid fa-user-doctor"></i> Medical Staff</h4>
             <ul class="dp-list">
-              <li><i class="fa-solid fa-stethoscope"></i> General Practitioners</li>
-              <li><i class="fa-solid fa-baby"></i> Obstetricians &amp; Gynaecologists</li>
-              <li><i class="fa-solid fa-bone"></i> Orthopaedic Surgeons</li>
-              <li><i class="fa-solid fa-flask"></i> Laboratory Specialists</li>
-              <li><i class="fa-solid fa-syringe"></i> Urology Specialists</li>
+              <li><a href="team.html#team-gp" class="dp-link team-jump-link"><i class="fa-solid fa-stethoscope"></i> General Practitioners</a></li>
+              <li><a href="team.html#team-obgyn" class="dp-link team-jump-link"><i class="fa-solid fa-baby"></i> Obstetricians &amp; Gynaecologists</a></li>
+              <li><a href="team.html#team-ortho" class="dp-link team-jump-link"><i class="fa-solid fa-bone"></i> Orthopaedic Surgeons</a></li>
+              <li><a href="team.html#team-lab" class="dp-link team-jump-link"><i class="fa-solid fa-flask"></i> Laboratory Specialists</a></li>
+              <li><a href="services.html#urology" class="dp-link service-jump-link"><i class="fa-solid fa-syringe"></i> Urology Specialists</a></li>
             </ul>
           </div>
           <div class="dp-block">
             <h4><i class="fa-solid fa-hand-holding-medical"></i> Support Team</h4>
             <ul class="dp-list">
-              <li><i class="fa-solid fa-user-nurse"></i> Nursing Staff</li>
-              <li><i class="fa-solid fa-person-rays"></i> Radiologists</li>
-              <li><i class="fa-solid fa-pills"></i> Pharmacy Team</li>
-              <li><i class="fa-solid fa-ambulance"></i> Emergency Response Team</li>
+              <li><a href="team.html#team-nursing" class="dp-link team-jump-link"><i class="fa-solid fa-user-nurse"></i> Nursing Staff</a></li>
+              <li><a href="team.html#team-radiology" class="dp-link team-jump-link"><i class="fa-solid fa-person-rays"></i> Radiologists</a></li>
+              <li><a href="team.html#team-pharmacy" class="dp-link team-jump-link"><i class="fa-solid fa-pills"></i> Pharmacy Team</a></li>
+              <li><a href="team.html#team-emergency" class="dp-link team-jump-link"><i class="fa-solid fa-ambulance"></i> Emergency Response Team</a></li>
             </ul>
-            <a href="#team" class="dp-see-all">Meet Our Team ↓</a>
           </div>
+          <a href="team.html" class="dp-see-all">Meet Our Team ↓</a>
         </div>
       </div>
     </li>
 
     <!-- PATIENTS -->
     <li class="nav-dropdown" id="patientsDropdown">
-      <a href="#patients" class="nav-link-dropdown" data-section="patients">
+      <a href="patients.html" class="nav-link-dropdown" data-page="patients">
         Patients <i class="fa-solid fa-chevron-down chevron"></i>
       </a>
       <div class="dropdown-panel">
@@ -143,29 +160,30 @@
           <div class="dp-block">
             <h4><i class="fa-solid fa-file-medical"></i> Patient Info</h4>
             <ul class="dp-list">
-              <li><a href="#appointment" id="dpBookAppointment" class="dp-link"><i class="fa-solid fa-calendar-check"></i> How to Book an Appointment</a></li>
-              <li><i class="fa-solid fa-bed-pulse"></i> Admission Procedure</li>
-              <li><i class="fa-solid fa-file-invoice"></i> Discharge Process</li>
-              <li><i class="fa-solid fa-circle-question"></i> Patient FAQ</li>
+              <li><a href="index.html#appointment" id="dpBookAppointment" class="dp-link"><i class="fa-solid fa-calendar-check"></i> How to Book an Appointment</a></li>
+              <li><a href="patients.html#patient-admission" class="dp-link patient-jump-link"><i class="fa-solid fa-bed-pulse"></i> Admission Procedure</a></li>
+              <li><a href="patients.html#patient-admission" class="dp-link patient-jump-link"><i class="fa-solid fa-file-invoice"></i> Discharge Process</a></li>
+              <li><a href="patients.html#patient-faq" class="dp-link patient-jump-link"><i class="fa-solid fa-circle-question"></i> Patient FAQ</a></li>
             </ul>
           </div>
           <div class="dp-block">
             <h4><i class="fa-solid fa-shield-heart"></i> Insurance &amp; Billing</h4>
             <ul class="dp-list">
-              <li><i class="fa-solid fa-circle-check"></i> NHIF / SHA Accepted</li>
-              <li><i class="fa-solid fa-circle-check"></i> Private Insurance Schemes</li>
-              <li><i class="fa-solid fa-circle-check"></i> Corporate Packages</li>
-              <li><i class="fa-solid fa-circle-check"></i> Cash &amp; M-Pesa Accepted</li>
+              <li><a href="patients.html#ins-nhif" class="dp-link patient-jump-link"><i class="fa-solid fa-circle-check"></i> SHA / SHIF Accredited</a></li>
+              <li><a href="patients.html#ins-pomsf" class="dp-link patient-jump-link"><i class="fa-solid fa-circle-check"></i> POMSF &amp; Teachers Scheme</a></li>
+              <li><a href="patients.html#ins-private" class="dp-link patient-jump-link"><i class="fa-solid fa-circle-check"></i> Private Insurance Schemes</a></li>
+              <li><a href="patients.html#ins-corporate" class="dp-link patient-jump-link"><i class="fa-solid fa-circle-check"></i> Corporate Packages</a></li>
+              <li><a href="patients.html#ins-cash" class="dp-link patient-jump-link"><i class="fa-solid fa-circle-check"></i> Cash &amp; M-Pesa Accepted</a></li>
             </ul>
-            <a href="#patients" class="dp-see-all">Patient Resources ↓</a>
+            <a href="patients.html" class="dp-see-all">Patient Resources ↓</a>
           </div>
         </div>
       </div>
     </li>
 
-    <li><a href="#galleryModal" class="nav-link" data-section="galleryModal">Gallery</a></li>
-    <li><a href="#careers" class="nav-link" data-section="careers">Careers</a></li>
-    <li><a href="#contact" class="nav-link" data-section="contact">Contact</a></li>
+    <li><a href="gallery.html" class="nav-link" data-page="gallery">Gallery</a></li>
+    <li><a href="careers.html" class="nav-link" data-page="careers">Careers</a></li>
+    <li><a href="contact.html" class="nav-link" data-page="contact">Contact</a></li>
   </ul>
 </nav>
 <!-- ── HOME ── -->
@@ -180,11 +198,8 @@
             <button class="btn" id="bookBtn">
             <i class="fa-solid fa-calendar-check"></i> Book Appointment
             </button>
-            <a href="tel:+254720519777" class="btn btn-outline">
-                <i class="fa-solid fa-phone"></i> Call Now
-            </a>
         </div>
-        
+
         <div class="hero-stats">
           <div class="hero-stat"><div class="num">40+</div><div class="lbl">Years of Care</div></div>
           <div class="hero-stat"><div class="num">9.5K+</div><div class="lbl">Facebook Followers</div></div>
@@ -220,7 +235,6 @@
                 <li><i class="fa-solid fa-truck-medical"></i> 24/7 Emergency Services Available</li>
                 <li><i class="fa-solid fa-phone"></i> Call: <a href="tel:+254720519777" style="color:inherit">+254 720 519 777</a></li>
                 <li><i class="fa-solid fa-phone"></i> Call: <a href="tel:+254708244911" style="color:inherit">+254 708 244 911</a></li>
-
             </ul>
         </div>
         <div class="appt-form-box">
@@ -233,7 +247,7 @@
                     </div>
                     <div class="form-group">
                         <label for="phone">Phone Number<span style="color: red;">*</span></label>
-                        <input type="tel" id="phone" name="phone" placeholder="+254 7XX XXX XXX" required autocomplete="tel">
+                        <input type="tel" id="phone" name="phone" placeholder=" 0742 XXX XXX" required autocomplete="tel">
                         <span class="field-error" id="err-phone"></span>
                     </div>
                 </div>
@@ -262,12 +276,12 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="apptDate">Preferred Date *</label>
+                        <label for="apptDate">Preferred Date <span style="color: red;">*</span></label>
                         <input type="date" id="apptDate" name="apptDate" required>
                         <span class="field-error" id="err-apptDate"></span>
                     </div>
                     <div class="form-group">
-                        <label for="apptTime">Preferred Time *</label>
+                        <label for="apptTime">Preferred Time <span style="color: red;">*</span></label>
                         <select id="apptTime" name="apptTime" required>
                             <option value="" disabled selected>Select a time</option>
                             <option>8:00 AM – 9:00 AM</option>
@@ -285,7 +299,7 @@
                     </div>
                 </div>
                 <div class="form-group full-width">
-                    <label for="notes">Additional Notes</label>
+                    <label for="notes">Additional Notes <span style="color: red;">*</span></label>
                     <textarea id="notes" name="notes" rows="3" placeholder="Briefly describe your concern or any relevant medical history..."></textarea>
                 </div>
                 <button type="submit" class="appt-btn">
@@ -306,7 +320,6 @@
     </div>
 </section>
 
-
 <!-- ── EMERGENCY BANNER ── -->
 <div class="emergency-banner" role="alert">
     <i class="fa-solid fa-truck-medical"></i>
@@ -325,555 +338,81 @@
   </div>
 </div>
 
-
-<!-- ── SERVICES ── -->
-<section id="services">
+<!-- ── TESTIMONIALS ── -->
+<section id="testimonials" style="background: var(--off-white);">
   <div class="container">
-    <p class="section-label">What We Offer</p>
-    <h3 class="section-title">Our Medical Services</h3>
-    <p class="section-sub">Comprehensive healthcare solutions delivered by experienced medical professionals committed to your wellbeing.</p>
-    <div class="services-grid">
-      <div class="service-card" id="outpatient">
-        <div class="service-icon" style="background:#e6f5f2;color:#0e7c6e;"><i class="fa-solid fa-stethoscope"></i></div>
-        <h3>Outpatient Consultation</h3>
-        <p>General consultations with experienced doctors for diagnosis, treatment and follow-up care.</p>
+    <p class="section-label">Patient Stories</p>
+    <h2 class="section-title">What Our Patients Say</h2>
+    <p class="section-sub">Real feedback from the community we've served for over 40 years.</p>
+
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="testimonial-stars" aria-label="5 out of 5 stars">
+          <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+        </div>
+        <p class="testimonial-text">The maternity team took such good care of me during delivery. The nurses checked on me through the night and made sure I was comfortable. I'm grateful for their dedication.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar"><i class="fa-solid fa-user"></i></div>
+          <div>
+            <strong>Purity N.</strong>
+            <span>Maternity Patient</span>
+          </div>
+        </div>
       </div>
-      <div class="service-card" id="laboratory">
-        <div class="service-icon" style="background:#eef2ff;color:#4c6ef5;"><i class="fa-solid fa-flask"></i></div>
-        <h3>Laboratory &amp; Diagnostics</h3>
-        <p>State-of-the-art diagnostic tests and laboratory services for accurate results and timely treatment.</p>
+
+      <div class="testimonial-card">
+        <div class="testimonial-stars" aria-label="5 out of 5 stars">
+          <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+        </div>
+        <p class="testimonial-text">I came in for an emergency at midnight and the response was immediate. The doctor on duty was calm, thorough, and explained everything clearly. Highly recommend this facility.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar"><i class="fa-solid fa-user"></i></div>
+          <div>
+            <strong>David K.</strong>
+            <span>Emergency Care</span>
+          </div>
+        </div>
       </div>
-      <div class="service-card" id="maternity">
-        <div class="service-icon" style="background:#fdf2f8;color:#d63384;"><i class="fa-solid fa-baby"></i></div>
-        <h3>Maternity Section</h3>
-        <p>Dedicated maternity ward providing prenatal, delivery and postnatal care for mother and child.</p>
+
+      <div class="testimonial-card">
+        <div class="testimonial-stars" aria-label="5 out of 5 stars">
+          <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+        </div>
+        <p class="testimonial-text">Quick lab results and friendly staff at the reception. I've been coming here for years for routine check-ups and they always accept my NHIF without any hassle.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar"><i class="fa-solid fa-user"></i></div>
+          <div>
+            <strong>Grace N.</strong>
+            <span>Outpatient Services</span>
+          </div>
+        </div>
       </div>
-      <div class="service-card" id="obstetrics">
-        <div class="service-icon" style="background:#fff3e0;color:#e65100;"><i class="fa-solid fa-venus"></i></div>
-        <h3>Obstetrics &amp; Gynaecology</h3>
-        <p>Comprehensive women's health services from routine check-ups to specialist gynaecological care.</p>
-      </div>
-      <div class="service-card" id="orthopaedic">
-        <div class="service-icon" style="background:#f0f4ff;color:#3730a3;"><i class="fa-solid fa-bone"></i></div>
-        <h3>X-Ray &amp; Orthopaedic Surgery</h3>
-        <p>Advanced imaging services and orthopaedic surgical care for bone and joint conditions.</p>
-      </div>
-      <div class="service-card" id="surgery">
-        <div class="service-icon" style="background:#e6f5f2;color:#0e7c6e;"><i class="fa-solid fa-scissors"></i></div>
-        <h3>General Surgery</h3>
-        <p>Full range of surgical procedures performed by qualified and experienced surgeons.</p>
-      </div>
-      <div class="service-card" id="urology">
-        <div class="service-icon" style="background:#fdf6ec;color:#c8963e;"><i class="fa-solid fa-person-dots-from-line"></i></div>
-        <h3>Urology Care</h3>
-        <p>Specialist urological care for conditions affecting the urinary tract and related organs.</p>
-      </div>
-      <div class="service-card" id="emergency">
-        <div class="service-icon" style="background:#fff0f0;color:#dc2626;"><i class="fa-solid fa-truck-medical"></i></div>
-        <h3>Emergency Care</h3>
-        <p>24/7 emergency services with a dedicated response team ready for critical situations at any time.</p>
-      </div>
+    </div>
+
+    <div class="testimonials-cta">
+      <a href="https://www.facebook.com/p/Limuru-Nursing-HOME-ltd-KWA-PATEL-100062970108708/" target="_blank" rel="noopener" class="dp-fb-btn">
+        <i class="fa-brands fa-facebook"></i> See more reviews on Facebook
+      </a>
     </div>
   </div>
 </section>
 
-<!-- ── TEAM ── -->
-<section id="team">
-  <div class="container">
-    <p class="section-label">Our Staff</p>
-    <h2 class="section-title">Meet Our Team</h2>
-    <p class="section-sub">Dedicated medical professionals committed to providing the highest standard of care to every patient.</p>
-    <div class="team-grid">
-      <div class="team-card">
-        <div class="team-avatar"><i class="fa-solid fa-user-doctor"></i></div>
-        <h3>General Practitioners</h3>
-        <p>Outpatient &amp; Primary Care</p>
-        <span>Available 24/7</span>
-      </div>
-      <div class="team-card">
-        <div class="team-avatar"><i class="fa-solid fa-baby"></i></div>
-        <h3>Obstetricians &amp; Gynaecologists</h3>
-        <p>Women's Health</p>
-        <span>Maternity Specialists</span>
-      </div>
-      <div class="team-card">
-        <div class="team-avatar"><i class="fa-solid fa-bone"></i></div>
-        <h3>Orthopaedic Surgeons</h3>
-        <p>Bone &amp; Joint Care</p>
-        <span>Surgical Specialists</span>
-      </div>
-      <div class="team-card">
-        <div class="team-avatar"><i class="fa-solid fa-flask"></i></div>
-        <h3>Laboratory Specialists</h3>
-        <p>Diagnostics &amp; Testing</p>
-        <span>Accurate &amp; Timely Results</span>
-      </div>
-      <div class="team-card">
-        <div class="team-avatar"><i class="fa-solid fa-user-nurse"></i></div>
-        <h3>Nursing Staff</h3>
-        <p>Patient Care &amp; Support</p>
-        <span>Round-the-clock care</span>
-      </div>
-      <div class="team-card">
-        <div class="team-avatar"><i class="fa-solid fa-person-rays"></i></div>
-        <h3>Radiologists</h3>
-        <p>X-Ray &amp; Imaging</p>
-        <span>Advanced Diagnostics</span>
-      </div>
-      <div class="team-card">
-        <div class="team-avatar"><i class="fa-solid fa-pills"></i></div>
-        <h3>Pharmacy Team</h3>
-        <p>Medication &amp; Dispensing</p>
-        <span>On-site Pharmacy</span>
-      </div>
-      <div class="team-card">
-        <div class="team-avatar" style="background:#fff0f0;color:#dc2626;"><i class="fa-solid fa-ambulance"></i></div>
-        <h3>Emergency Response</h3>
-        <p>Critical Care</p>
-        <span>24/7 Emergency Ready</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── PATIENTS ── -->
-<section id="patients">
-  <div class="container">
-    <p class="section-label">Patient Resources</p>
-    <h2 class="section-title">Patient Information</h2>
-    <p class="section-sub">Everything you need to know about visiting, booking and receiving care at Limuru Nursing Home.</p>
-    <div class="patients-grid">
-      <div>
-        <div class="info-card" style="margin-bottom:1.5rem;">
-          <h3><i class="fa-solid fa-calendar-check"></i> How to Book an Appointment</h3>
-          <ul class="steps-list">
-            <li><div class="step-num">1</div><p><strong>Call or Visit Us</strong>Call +254 720 519 777 or come to our reception at Viazi House, Gitungo Road.</p></li>
-            <li><div class="step-num">2</div><p><strong>Choose a Service</strong>Tell our staff what service or department you need to visit.</p></li>
-            <li><div class="step-num">3</div><p><strong>Confirm Your Slot</strong>We'll receive your appointment date, time and any preparation instructions.</p></li>
-            <li><div class="step-num">4</div><p><strong>Arrive &amp; Register</strong>Bring your ID, insurance card and any previous medical records on the day.</p></li>
-          </ul>
-        </div>
-        <div class="info-card">
-          <h3><i class="fa-solid fa-shield-heart"></i> Insurance &amp; Billing</h3>
-          <div class="insurance-grid">
-            <div class="ins-pill"><i class="fa-solid fa-circle-check"></i> NHIF / SHA</div>
-            <div class="ins-pill"><i class="fa-solid fa-circle-check"></i> Private Insurance</div>
-            <div class="ins-pill"><i class="fa-solid fa-circle-check"></i> Corporate Packages</div>
-            <div class="ins-pill"><i class="fa-solid fa-circle-check"></i> Cash Payments</div>
-            <div class="ins-pill"><i class="fa-solid fa-circle-check"></i> M-Pesa</div>
-          </div>
-        </div>
-      </div>
-      <div>
-        <div class="info-card" style="margin-bottom:1.5rem;">
-          <h3><i class="fa-solid fa-bed-pulse"></i> Admission &amp; Discharge</h3>
-          <ul class="steps-list">
-            <li><div class="step-num">1</div><p><strong>Admission</strong>Present your referral or arrive at the emergency desk. Our team will assess and allocate a ward.</p></li>
-            <li><div class="step-num">2</div><p><strong>During Your Stay</strong>Our nursing and medical staff will attend to you round the clock. Family visits are welcome.</p></li>
-            <li><div class="step-num">3</div><p><strong>Discharge</strong>Your doctor will issue a discharge summary. Settle your bill at the cashier before leaving.</p></li>
-          </ul>
-        </div>
-        <div class="info-card">
-          <h3><i class="fa-solid fa-circle-question"></i> Frequently Asked Questions</h3>
-          <div class="faq-item">
-            <div class="faq-q" onclick="toggleFaq(this)">Do you accept walk-in patients? <i class="fa-solid fa-chevron-down"></i></div>
-            <div class="faq-a">Yes, we accept walk-in patients at all times. For non-emergency cases we recommend calling ahead to reduce waiting time.</div>
-          </div>
-          <div class="faq-item">
-            <div class="faq-q" onclick="toggleFaq(this)">What are your visiting hours? <i class="fa-solid fa-chevron-down"></i></div>
-            <div class="faq-a">General visiting hours are 10am–12pm and 5pm–7pm daily. For ICU and maternity wards, please confirm with nursing staff.</div>
-          </div>
-          <div class="faq-item">
-            <div class="faq-q" onclick="toggleFaq(this)">Is emergency care available at night? <i class="fa-solid fa-chevron-down"></i></div>
-            <div class="faq-a">Yes. Our emergency department operates 24 hours a day, 7 days a week, including all public holidays.</div>
-          </div>
-          <div class="faq-item">
-            <div class="faq-q" onclick="toggleFaq(this)">Do you have a pharmacy on site? <i class="fa-solid fa-chevron-down"></i></div>
-            <div class="faq-a">Yes, our in-house pharmacy is open around the clock to dispense prescriptions and over-the-counter medications.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── GALLERY MODAL ── -->
-<div id="galleryModal">
-  <div class="gallery-modal-box">
-
-    <div class="gallery-modal-header">
-      <span class="gallery-modal-title">
-        <i class="fa-solid fa-camera-retro"></i> Photo Gallery
-      </span>
-      <button class="gallery-modal-close" id="galleryModalClose" aria-label="Close gallery">
-        <i class="fa-solid fa-xmark"></i>
-      </button>
-    </div>
-
-    <div id="galleryContent">
-
-      <div class="gallery-header">
-        <div class="gallery-eyebrow">
-          <i class="fa-solid fa-camera-retro"></i> Our Facilities
-        </div>
-        <h2 class="gallery-title">See Limuru Nursing Home<br><em>from the inside</em></h2>
-        <p class="gallery-subtitle">A glimpse into our facilities, wards, equipment, and the compassionate environment we have created for our patients.</p>
-      </div>
-
-      <div class="gallery-filters" role="tablist" aria-label="Gallery filter">
-        <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true">
-          <i class="fa-solid fa-grip"></i> All Photos <span class="count">16</span>
-        </button>
-        <button class="filter-btn" data-filter="facilities" role="tab" aria-selected="false">
-          <i class="fa-solid fa-building"></i> Facilities <span class="count">6</span>
-        </button>
-        <button class="filter-btn" data-filter="theatre" role="tab" aria-selected="false">
-          <i class="fa-solid fa-scalpel"></i> Theatre <span class="count">5</span>
-        </button>
-        <button class="filter-btn" data-filter="laboratory" role="tab" aria-selected="false">
-          <i class="fa-solid fa-flask"></i> Laboratory <span class="count">2</span>
-        </button>
-        <button class="filter-btn" data-filter="wards" role="tab" aria-selected="false">
-          <i class="fa-solid fa-bed-pulse"></i> Wards <span class="count">1</span>
-        </button>
-        <button class="filter-btn" data-filter="team" role="tab" aria-selected="false">
-          <i class="fa-solid fa-user-doctor"></i> Our Team <span class="count">2</span>
-        </button>
-      </div>
-
-      <div class="gallery-grid" id="galleryGrid">
-
-        <!-- FACILITIES -->
-        <div class="gallery-item" data-category="facilities" data-label="Main Entrance – Kwa Patel" tabindex="0" role="button" aria-label="View Main Entrance photo">
-          <span class="cat-badge">Facilities</span>
-          <img src="images/hero4.jpeg" alt="Main entrance of Limuru Nursing Home Kwa Patel" loading="lazy"/>
-          <div class="gallery-overlay">
-            <span class="overlay-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span>
-            <span class="overlay-label">Main Entrance – Kwa Patel</span>
-            <span class="overlay-cat"><i class="fa-solid fa-door-open"></i> Facilities</span>
-          </div>
-        </div>
-
-        <div class="gallery-item" data-category="facilities" data-label="Ambulance Bay – 24/7 Emergency" tabindex="0" role="button" aria-label="View Ambulance Bay photo">
-          <span class="cat-badge">Facilities</span>
-          <img src="images/hero2.jpeg" alt="Ambulance bay at Limuru Nursing Home" loading="lazy"/>
-          <div class="gallery-overlay">
-            <span class="overlay-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span>
-            <span class="overlay-label">Ambulance Bay – 24/7 Emergency</span>
-            <span class="overlay-cat"><i class="fa-solid fa-truck-medical"></i> Facilities</span>
-          </div>
-        </div>
-
-        <div class="gallery-item" data-category="facilities" data-label="Chemist – Open 24 Hours" tabindex="0" role="button" aria-label="View Chemist photo">
-          <span class="cat-badge">Facilities</span>
-          <img src="images/chemist.jpeg" alt="24-hour chemist at Limuru Nursing Home" loading="lazy"/>
-          <div class="gallery-overlay">
-            <span class="overlay-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span>
-            <span class="overlay-label">Chemist – Open 24 Hours</span>
-            <span class="overlay-cat"><i class="fa-solid fa-pills"></i> Facilities</span>
-          </div>
-        </div>
-
-        <div class="gallery-item" data-category="facilities" data-label="Laboratory Entrance" tabindex="0" role="button" aria-label="View Laboratory Entrance photo">
-          <span class="cat-badge">Facilities</span>
-          <img src="images/lab1.jpeg" alt="Laboratory entrance at Limuru Nursing Home" loading="lazy"/>
-          <div class="gallery-overlay">
-            <span class="overlay-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span>
-            <span class="overlay-label">Laboratory Entrance</span>
-            <span class="overlay-cat"><i class="fa-solid fa-flask"></i> Facilities</span>
-          </div>
-        </div>
-
-        <div class="gallery-item" data-category="facilities" data-label="Reception & Enquiries" tabindex="0" role="button" aria-label="View Reception photo">
-          <span class="cat-badge">Facilities</span>
-          <img src="images/sectionA.jpeg" alt="Reception and enquiries at Limuru Nursing Home" loading="lazy"/>
-          <div class="gallery-overlay">
-            <span class="overlay-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span>
-            <span class="overlay-label">Reception & Enquiries</span>
-            <span class="overlay-cat"><i class="fa-solid fa-door-open"></i> Facilities</span>
-          </div>
-        </div>
-
-        <div class="gallery-item" data-category="facilities" data-label="Hospital Exterior" tabindex="0" role="button" aria-label="View Hospital Exterior photo">
-          <span class="cat-badge">Facilities</span>
-          <img src="images/hero1.jpeg" alt="Exterior of Limuru Nursing Home" loading="lazy"/>
-          <div class="gallery-overlay">
-            <span class="overlay-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span>
-            <span class="overlay-label">Hospital Exterior</span>
-            <span class="overlay-cat"><i class="fa-solid fa-hospital"></i> Facilities</span>
-          </div>
-        </div>
-
-        <!-- THEATRE -->
-        <div class="gallery-item" data-category="theatre" data-label="Operating Theatre – Overview" tabindex="0" role="button" aria-label="View Operating Theatre photo">
-          <span class="cat-badge">Theatre</span>
-          <img src="images/ortho1.jpeg" alt="Operating theatre overview" loading="lazy"/>
-          <div class="gallery-overlay">
-            <span class="overlay-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span>
-            <span class="overlay-label">Operating Theatre</span>
-            <span class="overlay-cat"><i class="fa-solid fa-scalpel"></i> Theatre</span>
-          </div>
-        </div>
-
-        <div class="gallery-item" data-category="theatre" data-label="Theatre – C-Arm X-Ray Unit" tabindex="0" role="button" aria-label="View C-Arm theatre photo">
-          <span class="cat-badge">Theatre</span>
-          <img src="images/ortho2.jpeg" alt="C-arm X-ray unit in theatre" loading="lazy"/>
-          <div class="gallery-overlay">
-            <span class="overlay-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span>
-            <span class="overlay-label">Theatre – C-Arm X-Ray Unit</span>
-            <span class="overlay-cat"><i class="fa-solid fa-scalpel"></i> Theatre</span>
-          </div>
-        </div>
-
-        <div class="gallery-item" data-category="theatre" data-label="Theatre – Entry View" tabindex="0" role="button" aria-label="View Theatre entry photo">
-          <span class="cat-badge">Theatre</span>
-          <img src="images/ortho3.jpeg" alt="Operating theatre entry view" loading="lazy"/>
-          <div class="gallery-overlay">
-            <span class="overlay-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span>
-            <span class="overlay-label">Theatre – Entry View</span>
-            <span class="overlay-cat"><i class="fa-solid fa-scalpel"></i> Theatre</span>
-          </div>
-        </div>
-
-        <div class="gallery-item" data-category="theatre" data-label="Theatre – Surgical Lights" tabindex="0" role="button" aria-label="View Theatre surgical lights photo">
-          <span class="cat-badge">Theatre</span>
-          <img src="images/ortho4.jpeg" alt="Theatre with dual surgical lights" loading="lazy"/>
-          <div class="gallery-overlay">
-            <span class="overlay-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span>
-            <span class="overlay-label">Theatre – Surgical Lights</span>
-            <span class="overlay-cat"><i class="fa-solid fa-scalpel"></i> Theatre</span>
-          </div>
-        </div>
-
-        <div class="gallery-item" data-category="theatre" data-label="Operating Theatre Entrance" tabindex="0" role="button" aria-label="View Theatre entrance photo">
-          <span class="cat-badge">Theatre</span>
-          <img src="images/sectionG.jpeg" alt="Operating theatre entrance door" loading="lazy"/>
-          <div class="gallery-overlay">
-            <span class="overlay-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span>
-            <span class="overlay-label">Operating Theatre Entrance</span>
-            <span class="overlay-cat"><i class="fa-solid fa-door-closed"></i> Theatre</span>
-          </div>
-        </div>
-
-        <!-- LABORATORY -->
-        <div class="gallery-item" data-category="laboratory" data-label="Lab – Diagnostic Equipment" tabindex="0" role="button" aria-label="View Lab equipment photo">
-          <span class="cat-badge">Laboratory</span>
-          <img src="images/lab2.jpeg" alt="Diagnostic equipment in the laboratory" loading="lazy"/>
-          <div class="gallery-overlay">
-            <span class="overlay-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span>
-            <span class="overlay-label">Lab – Diagnostic Equipment</span>
-            <span class="overlay-cat"><i class="fa-solid fa-flask"></i> Laboratory</span>
-          </div>
-        </div>
-
-        <div class="gallery-item" data-category="laboratory" data-label="Lab – Analyst at Work" tabindex="0" role="button" aria-label="View Lab analyst photo">
-          <span class="cat-badge">Laboratory</span>
-          <img src="images/lab3.jpeg" alt="Lab analyst at work" loading="lazy"/>
-          <div class="gallery-overlay">
-            <span class="overlay-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span>
-            <span class="overlay-label">Lab – Analyst at Work</span>
-            <span class="overlay-cat"><i class="fa-solid fa-flask"></i> Laboratory</span>
-          </div>
-        </div>
-
-        <!-- WARDS -->
-        <div class="gallery-item" data-category="wards" data-label="Ward Corridor – Nurses Station" tabindex="0" role="button" aria-label="View Ward corridor photo">
-          <span class="cat-badge">Wards</span>
-          <img src="images/sectionH.jpeg" alt="Ward corridor with nurses station" loading="lazy"/>
-          <div class="gallery-overlay">
-            <span class="overlay-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span>
-            <span class="overlay-label">Ward Corridor – Nurses Station</span>
-            <span class="overlay-cat"><i class="fa-solid fa-bed-pulse"></i> Wards</span>
-          </div>
-        </div>
-
-        <!-- OUR TEAM -->
-        <div class="gallery-item" data-category="team" data-label="Medical Staff – Outside the Hospital" tabindex="0" role="button" aria-label="View Staff photo">
-          <span class="cat-badge">Our Team</span>
-          <img src="images/hero3.jpeg" alt="Medical staff outside Limuru Nursing Home" loading="lazy"/>
-          <div class="gallery-overlay">
-            <span class="overlay-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span>
-            <span class="overlay-label">Medical Staff</span>
-            <span class="overlay-cat"><i class="fa-solid fa-user-doctor"></i> Our Team</span>
-          </div>
-        </div>
-
-        <div class="gallery-item" data-category="team" data-label="Team – Medical Handover" tabindex="0" role="button" aria-label="View Team handover photo">
-          <span class="cat-badge">Our Team</span>
-          <img src="images/hero5.jpeg" alt="Medical team during handover" loading="lazy"/>
-          <div class="gallery-overlay">
-            <span class="overlay-zoom"><i class="fa-solid fa-magnifying-glass-plus"></i></span>
-            <span class="overlay-label">Team – Medical Handover</span>
-            <span class="overlay-cat"><i class="fa-solid fa-user-doctor"></i> Our Team</span>
-          </div>
-        </div>
-
-      </div><!-- /gallery-grid -->
-
-      <div class="gallery-empty" id="galleryEmpty">
-        <i class="fa-solid fa-images"></i>
-        <p>No photos in this category yet.</p>
-      </div>
-
-    </div><!-- /galleryContent -->
-  </div><!-- /gallery-modal-box -->
-</div><!-- /galleryModal -->
-
-<!-- ── PHOTO LIGHTBOX ── -->
-<div class="photo-lightbox" id="photoLightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
-  <div class="lb-inner">
-    <button class="lb-close" id="lbClose" aria-label="Close photo"><i class="fa-solid fa-xmark"></i></button>
-    <div class="lb-img-wrap">
-      <button class="lb-nav lb-prev" id="lbPrev" aria-label="Previous"><i class="fa-solid fa-chevron-left"></i></button>
-      <img id="lbImg" src="" alt=""/>
-      <button class="lb-nav lb-next" id="lbNext" aria-label="Next"><i class="fa-solid fa-chevron-right"></i></button>
-    </div>
-    <div class="lb-caption">
-      <p class="lb-caption-title" id="lbTitle"></p>
-      <p class="lb-caption-cat" id="lbCat"></p>
-    </div>
-    <p class="lb-counter" id="lbCounter"></p>
-  </div>
+<!-- ── STICKY QUICK ACTIONS ── -->
+<div class="quick-actions" aria-label="Quick contact actions">
+    <a href="tel:+254708244911" class="quick-action-btn quick-call" aria-label="Call us now">
+        <i class="fa-solid fa-phone"></i>
+        <span class="quick-tooltip">Call Now</span>
+    </a>
+    <a href="mailto:info@limurunursinghome.co.ke?subject=Appointment%20Enquiry&body=Hello%20Limuru%20Nursing%20Home%2C%20I%20would%20like%20to%20enquire%20about%20an%20appointment." class="quick-action-btn quick-email" aria-label="Email us">
+        <i class="fa-solid fa-envelope"></i>
+        <span class="quick-tooltip">Email Us</span>
+    </a>
 </div>
-
-
-<!-- ── CAREERS ── -->
-<section id="careers" style="display:none">
-  <div class="container">
-    <p class="section-label"><i class="fa-solid fa-briefcase-medical"></i> Join Our Team</p>
-    <h2 class="section-title">Careers at Limuru Nursing Home</h2>
-    <p class="section-sub">Be part of a compassionate team dedicated to dignified, quality healthcare in Limuru. We offer opportunities across all levels — jobs, internships, and student attachments.</p>
-
-    <!-- Careers Sub-tabs -->
-    <div class="careers-tabs" role="tablist" aria-label="Career categories">
-      <button class="career-tab active" data-tab="all" role="tab" aria-selected="true">
-        <i class="fa-solid fa-th-large"></i> All Opportunities <span class="career-count" id="ct-all"></span>
-      </button>
-      <button class="career-tab" data-tab="job" role="tab" aria-selected="false">
-        <i class="fa-solid fa-hospital-user"></i> Job Offers <span class="career-count" id="ct-job"></span>
-      </button>
-      <button class="career-tab" data-tab="intern" role="tab" aria-selected="false">
-        <i class="fa-solid fa-graduation-cap"></i> Internships <span class="career-count" id="ct-intern"></span>
-      </button>
-      <button class="career-tab" data-tab="attach" role="tab" aria-selected="false">
-        <i class="fa-solid fa-certificate"></i> Attachments <span class="career-count" id="ct-attach"></span>
-      </button>
-    </div>
-
-    <!-- Listings Grid -->
-    <div class="careers-grid" id="careersGrid"></div>
-    <div class="careers-empty" id="careersEmpty" style="display:none;">
-      <i class="fa-solid fa-folder-open"></i>
-      <p>No positions in this category at the moment. Check back soon!</p>
-    </div>
-  </div>
-</section>
-
-<!-- ── CAREERS APPLICATION MODAL ── -->
-<div class="careers-modal-overlay" id="careersModalOverlay">
-  <div class="careers-modal" id="careersModal">
-    <div class="careers-modal-header">
-      <div>
-        <h3 id="careersModalTitle">Apply for Position</h3>
-        <p id="careersModalMeta"></p>
-      </div>
-      <button class="careers-modal-close" id="careersModalClose" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
-    </div>
-    <div id="careersModalBody"></div>
-  </div>
-</div>
-
-<!-- ── CONTACT ── -->
-<section class="contact" id="contact">
-    <p class="section-label">Get In Touch</p>
-    <h2>Contact Us</h2>
-    <p class="section-sub" style="color: white;">We are here to help. Reach out to us by phone, email or simply visit us in Limuru Town.</p>
-    <br>
-    <div class="contact-grid">
-        <div class="contact-card">
-            <i class="fa-solid fa-location-dot"></i>
-            <div>
-                <strong>Our Location</strong>
-                <p>Viazi House, Gitungo Road<br>Limuru Town (Opp. Naivas Supermarket)</p>
-            </div>
-        </div>
-        <div class="contact-card">
-            <i class="fa-solid fa-phone"></i>
-            <div>
-                <strong>Call Us</strong>
-                <p><a href="tel:+254720519777">+254 720 519 777</a></p>
-                <p><a href="tel:+254720519777">+254 708 244 911</a></p>
-
-            </div>
-        </div>
-        <div class="contact-card">
-            <i class="fa-solid fa-envelope"></i>
-            <div>
-                <strong>Email Us</strong>
-                <p>
-                    <a href="mailto:info@limurunursinghome.co.ke">info@limurunursinghome.co.ke</a><br>
-                    <a href="mailto:limuru.nursinghome@yahoo.com">limuru.nursinghome@yahoo.com</a>
-                </p>
-            </div>
-        </div>
-        <div class="contact-card">
-            <i class="fa-solid fa-clock"></i>
-            <div>
-                <strong>Open 24-Hours</strong>
-                <p>Monday–Friday<br>Saturday &amp; Sunday<br>Emergency Care Available</p>
-            </div>
-        </div>
-    </div>
-
-   
-</section>
-
-<!-- ── SOCIAL ICONS ── -->
-<section class="social-section">
-    <p class="social-label">Follow &amp; Connect</p>
-    <div class="social-container">
-
-        <div class="icon-item">
-            <a href="mailto:info@limurunursinghome.co.ke?subject=Appointment%20Enquiry&body=Hello Limuru Nursing Home would like enquire about appointment." class="icon-box mail" aria-label="Email us">
-                <div class="tooltip">Email Us</div>
-                <i class="fa-solid fa-envelope"></i>
-            </a>
-            <span class="icon-name">Email</span>
-        </div>
-
-        <div class="icon-item">
-            <a href="https://www.facebook.com/p/Limuru-Nursing-HOME-ltd-KWA-PATEL-100062970108708/" target="_blank" rel="noopener" class="icon-box facebook" aria-label="Facebook">
-                <div class="tooltip">Facebook</div>
-                <i class="fa-brands fa-facebook-f"></i>
-            </a>
-            <span class="icon-name">Facebook</span>
-        </div>
-
-        <div class="icon-item">
-            <a href="mailto:limuru.nursinghome@yahoo.com?subject=Appointment%20Enquiry&body=Hello%20Limuru%20Nursing%20Home%2C%0A%0AI%20would%20like%20to%20enquire%20about%20an%20appointment." class="icon-box yahoo" aria-label="Yahoo Mail">
-                <div class="tooltip">Yahoo Mail</div>
-                <i class="fa-brands fa-yahoo"></i>
-            </a>
-            <span class="icon-name">Yahoo</span>
-        </div>
-
-        <div class="icon-item">
-            <a href="https://www.google.com.ua/maps/place/Limuru+Nursing+Home+Ltd+(kwa+patel)/@-1.109015,36.6409022,3a,75y,350.62h,90t/data=!3m7!1e1!3m5!1sxBv9jC7bES55c26MTVx1MQ!2e0!6shttps:%2F%2Fstreetviewpixels-pa.googleapis.com%2Fv1%2Fthumbnail%3Fcb_client%3Dmaps_sv.tactile%26w%3D900%26h%3D600%26pitch%3D0%26panoid%3DxBv9jC7bES55c26MTVx1MQ%26yaw%3D350.62!7i16384!8i8192!4m16!1m8!3m7!1s0x182f27c6164c1141:0xd4df65a4cdc91c42!2sLimuru+Nursing+Home+Ltd+(kwa+patel)!8m2!3d-1.108793!4d36.640887!10e5!16s%2Fg%2F1tmk0_h0!3m6!1s0x182f27c6164c1141:0xd4df65a4cdc91c42!8m2!3d-1.108793!4d36.640887!10e5!16s%2Fg%2F1tmk0_h0?entry=ttu&g_ep=EgoyMDI2MDUyNS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener" class="icon-box location" aria-label="Get Directions">
-                <div class="tooltip">Get Directions</div>
-                <i class="fa-solid fa-location-dot"></i>
-            </a>
-            <span class="icon-name">Location</span>
-        </div>
-
-    </div>
-</section>
-
 
 <!-- ── BACK TO TOP ── -->
 <button class="back-to-top" id="backToTop" aria-label="Back to top">
     <i class="fa-solid fa-chevron-up"></i>
 </button>
-
 
 <!-- ── FOOTER ── -->
 <footer>
@@ -882,6 +421,6 @@
 </footer>
 
 <!-- linked js -->
-<script src="main.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
