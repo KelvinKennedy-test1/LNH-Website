@@ -14,12 +14,16 @@
     --gray-600: #5c6470;
     --gray-800: #2c3340;
     --text: #0b0c0e;
+    --border: var(--gray-200);
+    --muted: var(--gray-600);
     --font-display: 'Playfair Display', Georgia, serif;
     --font-body: 'DM Sans', sans-serif;
     --nav-h: 70px;
     --radius: 10px;
     --shadow: 0 4px 24px rgba(11, 61, 145, 0.10);
     --shadow-sm: 0 2px 8px rgba(11, 61, 145, 0.07);
+    --navy-text: var(--navy);
+    --teal-text: var(--teal);
   }
 
   html { scroll-behavior: smooth; background: var(--off-white); }
@@ -31,7 +35,7 @@
     height: var(--nav-h);
     background: var(--navy);
     display: flex; align-items: center; justify-content: space-between;
-    padding: 0 2.5rem;
+    padding: 0 2.5rem 0 2px;
     box-shadow: 0 2px 20px rgba(10,37,64,0.25);
   }
   .logo {
@@ -48,6 +52,22 @@
     list-style: none;
   }
   #navMenu > li { position: relative; }
+  .nav-end {
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .theme-toggle {
+    display: flex; align-items: center; justify-content: center;
+    width: 44px; height: 44px; flex-shrink: 0;
+    border-radius: 50%; border: 1px solid rgba(255,255,255,0.25);
+    background: rgba(255,255,255,0.08); color: #fff;
+    font-size: 0.95rem; cursor: pointer;
+    transition: background 0.2s, border-color 0.2s, transform 0.2s;
+  }
+  .theme-toggle:hover { background: rgba(255,255,255,0.18); }
+  .theme-toggle:active { transform: scale(0.92); }
+  .theme-toggle .fa-sun { display: none; }
+  [data-theme="dark"] .theme-toggle .fa-moon { display: none; }
+  [data-theme="dark"] .theme-toggle .fa-sun { display: block; }
   .nav-link, .nav-link-dropdown {
     display: flex; align-items: center; gap: 5px;
     color: rgba(255,255,255,0.85);
@@ -64,18 +84,27 @@
 
   /* Dropdown Panels */
   .dropdown-panel {
-    display: none; position: absolute; top: calc(100% + 8px); left: 50%;
+    display: none; position: absolute; top: 100%; left: 50%;
     transform: translateX(-50%);
-    background: var(--white); border-radius: 14px;
-    box-shadow: 0 16px 48px rgba(10,37,64,0.18);
-    min-width: 520px; z-index: 200; padding: 1.5rem;
-    border: 1px solid var(--gray-200);
+    /* Invisible bridge: the panel itself now starts flush against the
+       trigger (top: 100%, no gap), with this padding standing in for the
+       visual gap. Since the padding is still part of the panel's own box,
+       the mouse never leaves a hoverable element while crossing it — fixing
+       the classic bug where the card would close before you could reach it. */
+    padding-top: 8px;
+    min-width: 520px; z-index: 200;
     animation: dropIn 0.18s ease;
   }
   @keyframes dropIn { from { opacity: 0; transform: translateX(-50%) translateY(-8px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
   .nav-dropdown:hover .dropdown-panel,
   .nav-dropdown.open .dropdown-panel { display: block; }
-  .dropdown-inner { display: flex; gap: 2rem; }
+  .dropdown-inner {
+    display: flex; gap: 2rem; width: 100%; box-sizing: border-box;
+    background: var(--white); border-radius: 14px;
+    box-shadow: 0 16px 48px rgba(10,37,64,0.18);
+    padding: 1.5rem;
+    border: 1px solid var(--gray-200);
+  }
   .dp-block { flex: 1; min-width: 140px; }
   .dp-block h4 { font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--teal); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 6px; }
   .dp-list { list-style: none; }
@@ -108,8 +137,8 @@
   /* ── PAGE SECTIONS ── */
   section { padding: 80px 0; }
   .container { max-width: 1140px; margin: 0 auto; padding: 0 1.5rem; }
-  .section-label { font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--teal); margin-bottom: 0.6rem; }
-  .section-title { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 700; color: var(--navy); line-height: 1.2; margin-bottom: 1rem; }
+  .section-label { font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--teal-text); margin-bottom: 0.6rem; }
+  .section-title { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 700; color: var(--navy-text); line-height: 1.2; margin-bottom: 1rem; }
   .section-sub { font-size: 1rem; color: var(--gray-600); max-width: 560px; line-height: 1.7; }
 
   /* ── HERO ── */
@@ -123,7 +152,7 @@
     content: ''; position: absolute; inset: 0;
     background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
   }
-  
+
   /* ── BUTTONS ── */
 .btn {
     background: #00b894;
@@ -399,6 +428,7 @@
   .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
   .about-img-wrap { position: relative; }
   .about-img-box { background: var(--navy); border-radius: 20px; aspect-ratio: 4/3; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+  .about-hero-img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
   .about-img-placeholder { text-align: center; color: rgba(255,255,255,0.5); }
   .about-img-placeholder i { font-size: 4rem; display: block; margin-bottom: 1rem; }
   .about-badge-card { position: absolute; bottom: -20px; right: -20px; background: var(--gold); color: white; padding: 1rem 1.25rem; border-radius: 12px; text-align: center; box-shadow: var(--shadow); }
@@ -408,7 +438,7 @@
   .feature-list li { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--gray-200); }
   .feature-list li:last-child { border-bottom: none; }
   .feat-icon { width: 36px; height: 36px; background: var(--teal-light); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--teal); flex-shrink: 0; font-size: 0.9rem; }
-  .feat-text strong { display: block; font-size: 0.9rem; font-weight: 600; color: var(--navy); }
+  .feat-text strong { display: block; font-size: 0.9rem; font-weight: 600; color: var(--navy-text); }
   .feat-text span { font-size: 0.82rem; color: var(--gray-600); }
 
   /* ── SERVICES ── */
@@ -422,9 +452,8 @@
     50%  { box-shadow: 0 0 0 8px rgba(14,124,110,0.15), var(--shadow); }
     100% { box-shadow: 0 0 0 4px var(--teal-light), var(--shadow); }
   }
-  .sevice-title{ color: #0b0c0e;}
   .service-icon { width: 52px; height: 52px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; margin-bottom: 1rem; }
-  .service-card h3 { font-size: 1rem; font-family: Arial, Helvetica, sans-serif; font-weight: 600; color: var(--navy); margin-bottom: 0.5rem; }
+  .service-card h3 { font-size: 1rem; font-family: Arial, Helvetica, sans-serif; font-weight: 600; color: var(--navy-text); margin-bottom: 0.5rem; }
   .service-card p { font-size: 0.85rem; font-family: Arial, Helvetica, sans-serif; color: var(--gray-600); line-height: 1.65; }
 
   /* ── TEAM ── */
@@ -437,8 +466,7 @@
   .info-card.highlight { box-shadow: 0 0 0 4px var(--teal-light), var(--shadow); }
   .ins-pill.highlight { box-shadow: 0 0 0 4px var(--teal-light); }
   .team-avatar { width: 72px; height: 72px; border-radius: 50%; background: var(--teal-light); margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; color: var(--teal); }
-  .section-title{ color: #111;}
-  .team-card h3 { font-size: 0.95rem; font-family: Arial, Helvetica, sans-serif; font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .team-card h3 { font-size: 0.95rem; font-family: Arial, Helvetica, sans-serif; font-weight: 600; color: var(--navy-text); margin-bottom: 4px; }
   .team-card p { font-size: 0.8rem; color: var(--teal); font-weight: 500; margin-bottom: 6px; }
   .team-card span { font-size: 0.78rem; color: var(--gray-400); }
 
@@ -458,7 +486,7 @@
     color: var(--teal); display: flex; align-items: center; justify-content: center;
     font-size: 1rem; flex-shrink: 0;
   }
-  .testimonial-author strong { display: block; font-size: 0.88rem; color: var(--navy); font-weight: 600; }
+  .testimonial-author strong { display: block; font-size: 0.88rem; color: var(--navy-text); font-weight: 600; }
   .testimonial-author span { font-size: 0.76rem; color: var(--gray-400); }
   .testimonials-cta { text-align: center; margin-top: 2.5rem; }
 
@@ -466,13 +494,13 @@
   #patients { background: var(--gray-200); }
   .patients-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 3rem; }
   .info-card { background: var(--off-white); border-radius: 16px; padding: 2rem; transition: box-shadow 0.3s; scroll-margin-top: calc(var(--nav-h) + 16px); }
-  .info-card h3 { font-size: 1rem; font-family: Arial, Helvetica, sans-serif; font-weight: 600; color: var(--navy); margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; }
+  .info-card h3 { font-size: 1rem; font-family: Arial, Helvetica, sans-serif; font-weight: 600; color: var(--navy-text); margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; }
   .info-card h3 i { color: var(--teal); }
   .steps-list { list-style: none; }
   .steps-list li { display: flex; gap: 12px; margin-bottom: 14px; }
   .step-num { width: 26px; height: 26px; border-radius: 50%; background: var(--teal); color: white; font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
   .steps-list li p { font-size: 0.85rem; color: var(--gray-600); line-height: 1.55; }
-  .steps-list li p strong { display: block; color: var(--navy); font-weight: 600; font-size: 0.88rem; }
+  .steps-list li p strong { display: block; color: var(--navy-text); font-weight: 600; font-size: 0.88rem; }
   .insurance-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-top: 0.5rem; }
   .ins-pill { background: var(--teal-light); color: var(--teal); font-size: 0.8rem; font-weight: 600; padding: 8px 12px; border-radius: 8px; display: flex; align-items: center; gap: 6px; transition: box-shadow 0.3s; scroll-margin-top: calc(var(--nav-h) + 16px); }
   .ins-pill i { font-size: 0.75rem; }
@@ -488,7 +516,7 @@
   }
   .ins-pill.ins-sub i { color: var(--teal); }
   .faq-item { border-bottom: 1px solid var(--gray-200); }
-  .faq-q { font-size: 0.88rem; font-weight: 600; color: var(--navy); padding: 14px 0; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+  .faq-q { font-size: 0.88rem; font-weight: 600; color: var(--navy-text); padding: 14px 0; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
   .faq-q i { font-size: 0.75rem; color: var(--gray-400); transition: transform 0.2s; }
   .faq-q.open i { transform: rotate(180deg); }
   .faq-a { font-size: 0.83rem; color: var(--gray-600); line-height: 1.65; padding-bottom: 14px; display: none; }
@@ -841,7 +869,10 @@
     .nav-dropdown:hover .dropdown-panel { display: none; } /* hover mega-menu disabled on touch widths */
     .nav-dropdown.open .dropdown-panel { display: block; } /* click-to-open still works, and wins over the hover rule above */
 
-    .dropdown-inner { display: flex; flex-direction: column; gap: 0.25rem; padding: 0.5rem 0; }
+    .dropdown-inner {
+      display: flex; flex-direction: column; gap: 0.25rem; padding: 0.5rem 0;
+      background: transparent; border: none; box-shadow: none; border-radius: 0; width: auto;
+    }
     .dp-block { min-width: 0; }
 
     /* Hide descriptive/informational content that isn't a nav link — keeps the list short and scannable */
@@ -938,7 +969,7 @@
   .badge-job    { background: #eef2ff; color: #3730a3; }
   .badge-intern { background: var(--gold-light); color: #7a5b1a; }
   .badge-attach { background: var(--teal-light); color: var(--teal); }
-  .career-card h3 { font-size: 1rem; font-family: Arial, Helvetica, sans-serif; font-weight: 600; color: var(--navy); margin-bottom: 0.5rem; }
+  .career-card h3 { font-size: 1rem; font-family: Arial, Helvetica, sans-serif; font-weight: 600; color: var(--navy-text); margin-bottom: 0.5rem; }
   .career-meta {
     display: flex; flex-wrap: wrap; gap: 12px;
     font-size: 0.8rem; color: var(--gray-600); margin-bottom: 0.85rem;
@@ -988,7 +1019,7 @@
     position: sticky; top: 0; background: #fff; z-index: 1;
     border-radius: 16px 16px 0 0;
   }
-  .careers-modal-header h3 { font-size: 1.05rem; font-family: Arial, sans-serif; color: var(--navy); font-weight: 700; }
+  .careers-modal-header h3 { font-size: 1.05rem; font-family: Arial, sans-serif; color: var(--navy-text); font-weight: 700; }
   .careers-modal-header p { font-size: 0.82rem; color: var(--gray-600); margin-top: 3px; }
   .careers-modal-close {
     background: var(--teal-light); border: none; color: var(--teal);
@@ -1001,7 +1032,7 @@
   .careers-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
   .careers-form-group { display: flex; flex-direction: column; gap: 5px; }
   .careers-form-group.full { grid-column: 1 / -1; }
-  .careers-form-group label { font-size: 12px; font-weight: 700; color: var(--navy); letter-spacing: 0.3px; }
+  .careers-form-group label { font-size: 12px; font-weight: 700; color: var(--navy-text); letter-spacing: 0.3px; }
   .careers-form-group input,
   .careers-form-group select,
   .careers-form-group textarea {
@@ -1025,7 +1056,7 @@
   .careers-upload-zone input[type=file] {
     position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
   }
-  .careers-upload-zone i { font-size: 1.8rem; color: var(--navy); margin-bottom: 6px; display: block; }
+  .careers-upload-zone i { font-size: 1.8rem; color: var(--navy-text); margin-bottom: 6px; display: block; }
   .careers-upload-zone p { font-size: 0.8rem; color: var(--gray-600); }
   .careers-upload-zone p strong { color: var(--teal); }
   .careers-file-name { font-size: 0.75rem; color: var(--teal); margin-top: 5px; font-weight: 600; }
@@ -1101,3 +1132,84 @@
   @media (prefers-reduced-motion: reduce) {
     .reveal { opacity: 1; transform: none; transition: none; }
   }
+  /* ═══════════════════════════════════════════════════════════
+     DARK MODE
+     Toggled via [data-theme="dark"] on <html>. Most surfaces,
+     text and borders already flow through the CSS variables
+     above, so redefining them here re-themes the majority of
+     the site automatically. The overrides below cover the
+     handful of components that use hardcoded colors instead
+     of variables (forms, modals).
+  ═══════════════════════════════════════════════════════════ */
+
+  [data-theme="dark"] {
+    --white: #1b1e29;
+    --off-white: #121319;
+    --gray-100: #232733;
+    --gray-200: #333949;
+    --gray-400: #7d8492;
+    --gray-600: #b7bcc7;
+    --gray-800: #eef0f3;
+    --text: #f1f2f5;
+    --border: var(--gray-200);
+    --muted: var(--gray-600);
+    --teal-light: #17332e;
+    --gold-light: #2c2517;
+    --shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.28);
+    /* The brand magenta (--navy) reads poorly as text on near-black
+       surfaces, so headings/labels use a brightened variant here while
+       backgrounds (nav bar, buttons) keep the original --navy as-is. */
+    --navy-text: #ed4ec5;
+    --teal-text: #30e7d0;
+  }
+
+  /* Smooth, non-jarring transition when switching themes */
+  html { transition: background-color 0.25s ease; }
+  body, #mainNav, .service-card, .team-card, .testimonial-card, .career-card,
+  .info-card, .appt-form-box, .careers-modal, footer,
+  .form-group input, .form-group select, .form-group textarea,
+  .careers-form-group input, .careers-form-group select, .careers-form-group textarea {
+    transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+  }
+
+  /* Homepage appointment form — built with hardcoded colors rather than variables */
+  [data-theme="dark"] .appt-form-box { background: var(--white); box-shadow: 0 8px 32px rgba(0,0,0,0.35); }
+  [data-theme="dark"] .form-group input,
+  [data-theme="dark"] .form-group select,
+  [data-theme="dark"] .form-group textarea {
+    background: var(--off-white); color: var(--text); border-color: var(--gray-200);
+  }
+  [data-theme="dark"] .form-group input::placeholder,
+  [data-theme="dark"] .form-group textarea::placeholder { color: var(--gray-400); }
+  [data-theme="dark"] .form-group input:focus,
+  [data-theme="dark"] .form-group select:focus,
+  [data-theme="dark"] .form-group textarea:focus { background: var(--white); }
+
+  /* Careers application modal — also hardcoded */
+  [data-theme="dark"] .careers-modal { background: var(--white); box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+  [data-theme="dark"] .careers-modal-header { background: var(--white); }
+  [data-theme="dark"] .careers-form-group input,
+  [data-theme="dark"] .careers-form-group select,
+  [data-theme="dark"] .careers-form-group textarea {
+    background: var(--off-white); color: var(--text); border-color: var(--gray-200);
+  }
+  [data-theme="dark"] .careers-form-group input::placeholder,
+  [data-theme="dark"] .careers-form-group textarea::placeholder { color: var(--gray-400); }
+  [data-theme="dark"] .careers-form-group input:focus,
+  [data-theme="dark"] .careers-form-group select:focus,
+  [data-theme="dark"] .careers-form-group textarea:focus { background: var(--white); }
+  [data-theme="dark"] .careers-upload-zone { background: var(--off-white); border-color: var(--gray-200); }
+  [data-theme="dark"] .careers-upload-zone:hover { background: var(--teal-light); }
+  [data-theme="dark"] .careers-cancel-btn { background: var(--white); border-color: var(--gray-200); color: var(--gray-600); }
+
+  /* Gallery lightbox header/frame */
+  [data-theme="dark"] .gallery-modal-header { background: var(--white); }
+  [data-theme="dark"] .gallery-modal-box { background: var(--off-white); }
+
+  /* Emergency notice pill inside the About dropdown */
+  [data-theme="dark"] .dp-emergency { background: #2a1414; border-color: #4a1f1f; color: #ff8b8b; }
+
+  /* Footer reads as near-black in both themes already; nudge it slightly
+     so it doesn't look identical to the page background in dark mode */
+  [data-theme="dark"] footer { background: #0a0a0d; }
