@@ -2,6 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script>
+      // Apply saved theme before first paint to avoid a light-mode flash.
+      (function () {
+        try {
+          var saved = localStorage.getItem('lnh-theme');
+          var wantsDark = saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          if (wantsDark) document.documentElement.setAttribute('data-theme', 'dark');
+        } catch (e) {}
+      })();
+    </script>
     <meta name="Author" content="Kelvin Ototo Kennedy">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Comprehensive healthcare services at Limuru Nursing Home: outpatient, maternity, surgery, laboratory, urology, emergency and more.">
@@ -13,16 +23,13 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 <body data-page="services">
 <nav id="mainNav">
   <div class="logo">
-    <img src="LNH_Logo.png" alt="Limuru Nursing Home Ltd – Kwa Patel" class="logo-full" loading="lazy">
+    <img src="LNH_Logo.png" alt="Limuru Nursing Home Ltd – Kwa Patel" class="logo-full" fetchpriority="high">
   </div>
-  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
-    <span></span><span></span><span></span>
-  </button>
+  <div class="nav-end">
   <ul id="navMenu">
     <li><a href="index.html" class="nav-link" data-page="index">Home</a></li>
 
@@ -36,7 +43,7 @@
           <div class="dp-block">
             <h4><i class="fa-solid fa-hospital"></i> About Us</h4>
             <p class="dp-about-blurb">A middle-sized hospital in Limuru Town, <strong>opposite Naivas Supermarket</strong>. Serving the community for over <strong>40 years</strong> with 9,500+ Facebook followers.</p>
-            <a href="https://www.facebook.com/p/Limuru-Nursing-HOME-ltd-KWA-PATEL-100062970108708/" target="_blank" rel="noopener" class="dp-fb-btn"><i class="fa-brands fa-facebook"></i> Facebook Page</a>
+            <a href="https://www.facebook.com/limurunursinghome?mibextid=ZbWKwL" target="_blank" rel="noopener" class="dp-fb-btn"><i class="fa-brands fa-facebook"></i> Facebook Page</a>
           </div>
           <div class="dp-block">
             <h4><i class="fa-solid fa-address-card"></i> Contact &amp; Location</h4>
@@ -112,8 +119,8 @@
               <li><a href="team.html#team-pharmacy" class="dp-link team-jump-link"><i class="fa-solid fa-pills"></i> Pharmacy Team</a></li>
               <li><a href="team.html#team-emergency" class="dp-link team-jump-link"><i class="fa-solid fa-ambulance"></i> Emergency Response Team</a></li>
             </ul>
+            <a href="team.html" class="dp-see-all">Meet Our Team ↓</a>
           </div>
-          <a href="team.html" class="dp-see-all">Meet Our Team ↓</a>
         </div>
       </div>
     </li>
@@ -153,6 +160,13 @@
     <li><a href="careers.html" class="nav-link" data-page="careers">Careers</a></li>
     <li><a href="contact.html" class="nav-link" data-page="contact">Contact</a></li>
   </ul>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+      <i class="fa-solid fa-moon" aria-hidden="true"></i><i class="fa-solid fa-sun" aria-hidden="true"></i>
+    </button>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </nav>
 <!-- ── SERVICES ── -->
 <section id="services" style="padding-top:6.5rem;">
@@ -219,7 +233,7 @@
         </div>
 
         <div class="icon-item">
-            <a href="https://www.facebook.com/p/Limuru-Nursing-HOME-ltd-KWA-PATEL-100062970108708/" target="_blank" rel="noopener" class="icon-box facebook" aria-label="Facebook">
+            <a href="https://www.facebook.com/limurunursinghome?mibextid=ZbWKwL" target="_blank" rel="noopener" class="icon-box facebook" aria-label="Facebook">
                 <div class="tooltip">Facebook</div>
                 <i class="fa-brands fa-facebook-f"></i>
             </a>
@@ -235,7 +249,7 @@
         </div>
 
         <div class="icon-item">
-            <a href="https://www.google.com.ua/maps/place/Limuru+Nursing+Home+Ltd+(kwa+patel)/@-1.109015,36.6409022,3a,75y,350.62h,90t/data=!3m7!1e1!3m5!1sxBv9jC7bES55c26MTVx1MQ!2e0!6shttps:%2F%2Fstreetviewpixels-pa.googleapis.com%2Fv1%2Fthumbnail%3Fcb_client%3Dmaps_sv.tactile%26w%3D900%26h%3D600%26pitch%3D0%26panoid%3DxBv9jC7bES55c26MTVx1MQ%26yaw%3D350.62!7i16384!8i8192!4m16!1m8!3m7!1s0x182f27c6164c1141:0xd4df65a4cdc91c42!2sLimuru+Nursing+Home+Ltd+(kwa+patel)!8m2!3d-1.108793!4d36.640887!10e5!16s%2Fg%2F1tmk0_h0!3m6!1s0x182f27c6164c1141:0xd4df65a4cdc91c42!8m2!3d-1.108793!4d36.640887!10e5!16s%2Fg%2F1tmk0_h0?entry=ttu&g_ep=EgoyMDI2MDUyNS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener" class="icon-box location" aria-label="Get Directions">
+            <a href="https://www.google.com/maps/place/Limuru+Nursing+Home+Ltd+(kwa+patel)/@-1.109015,36.6409022,3a,75y,350.62h,90t/data=!3m7!1e1!3m5!1sxBv9jC7bES55c26MTVx1MQ!2e0!6shttps:%2F%2Fstreetviewpixels-pa.googleapis.com%2Fv1%2Fthumbnail%3Fcb_client%3Dmaps_sv.tactile%26w%3D900%26h%3D600%26pitch%3D0%26panoid%3DxBv9jC7bES55c26MTVx1MQ%26yaw%3D350.62!7i16384!8i8192!4m16!1m8!3m7!1s0x182f27c6164c1141:0xd4df65a4cdc91c42!2sLimuru+Nursing+Home+Ltd+(kwa+patel)!8m2!3d-1.108793!4d36.640887!10e5!16s%2Fg%2F1tmk0_h0!3m6!1s0x182f27c6164c1141:0xd4df65a4cdc91c42!8m2!3d-1.108793!4d36.640887!10e5!16s%2Fg%2F1tmk0_h0?entry=ttu&g_ep=EgoyMDI2MDUyNS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener" class="icon-box location" aria-label="Get Directions">
                 <div class="tooltip">Get Directions</div>
                 <i class="fa-solid fa-location-dot"></i>
             </a>
