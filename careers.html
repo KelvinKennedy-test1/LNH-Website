@@ -2,9 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script>
+      // Apply saved theme before first paint to avoid a light-mode flash.
+      (function () {
+        try {
+          var saved = localStorage.getItem('lnh-theme');
+          var wantsDark = saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+          if (wantsDark) document.documentElement.setAttribute('data-theme', 'dark');
+        } catch (e) {}
+      })();
+    </script>
     <meta name="Author" content="Kelvin Ototo Kennedy">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore job openings, internships and student attachments at Limuru Nursing Home Ltd (Kwa Patel).">
+    <meta name="description" content="Careers at Limuru Nursing Home Ltd — explore job openings, internships and clinical attachments, and apply online.">
     <meta name="theme-color" content="#0b3d91">
     <link rel="canonical" href="https://www.limurunursinghome.co.ke/careers.html">
     <title>Careers | Limuru Nursing Home Ltd</title>
@@ -13,16 +23,13 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 <body data-page="careers">
 <nav id="mainNav">
   <div class="logo">
-    <img src="LNH_Logo.png" alt="Limuru Nursing Home Ltd – Kwa Patel" class="logo-full" loading="lazy">
+    <img src="LNH_Logo.png" alt="Limuru Nursing Home Ltd – Kwa Patel" class="logo-full" fetchpriority="high">
   </div>
-  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
-    <span></span><span></span><span></span>
-  </button>
+  <div class="nav-end">
   <ul id="navMenu">
     <li><a href="index.html" class="nav-link" data-page="index">Home</a></li>
 
@@ -36,7 +43,7 @@
           <div class="dp-block">
             <h4><i class="fa-solid fa-hospital"></i> About Us</h4>
             <p class="dp-about-blurb">A middle-sized hospital in Limuru Town, <strong>opposite Naivas Supermarket</strong>. Serving the community for over <strong>40 years</strong> with 9,500+ Facebook followers.</p>
-            <a href="https://www.facebook.com/p/Limuru-Nursing-HOME-ltd-KWA-PATEL-100062970108708/" target="_blank" rel="noopener" class="dp-fb-btn"><i class="fa-brands fa-facebook"></i> Facebook Page</a>
+            <a href="https://www.facebook.com/limurunursinghome?mibextid=ZbWKwL" target="_blank" rel="noopener" class="dp-fb-btn"><i class="fa-brands fa-facebook"></i> Facebook Page</a>
           </div>
           <div class="dp-block">
             <h4><i class="fa-solid fa-address-card"></i> Contact &amp; Location</h4>
@@ -112,8 +119,8 @@
               <li><a href="team.html#team-pharmacy" class="dp-link team-jump-link"><i class="fa-solid fa-pills"></i> Pharmacy Team</a></li>
               <li><a href="team.html#team-emergency" class="dp-link team-jump-link"><i class="fa-solid fa-ambulance"></i> Emergency Response Team</a></li>
             </ul>
+            <a href="team.html" class="dp-see-all">Meet Our Team ↓</a>
           </div>
-          <a href="team.html" class="dp-see-all">Meet Our Team ↓</a>
         </div>
       </div>
     </li>
@@ -153,7 +160,15 @@
     <li><a href="careers.html" class="nav-link" data-page="careers">Careers</a></li>
     <li><a href="contact.html" class="nav-link" data-page="contact">Contact</a></li>
   </ul>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+      <i class="fa-solid fa-moon" aria-hidden="true"></i><i class="fa-solid fa-sun" aria-hidden="true"></i>
+    </button>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </nav>
+
 <!-- ── CAREERS ── -->
 <section id="careers" style="padding-top:6.5rem;">
   <div class="container">
@@ -161,44 +176,85 @@
     <h2 class="section-title">Careers at Limuru Nursing Home</h2>
     <p class="section-sub">Be part of a compassionate team dedicated to dignified, quality healthcare in Limuru. We offer opportunities across all levels — jobs, internships, and student attachments.</p>
 
-    <!-- Careers Sub-tabs -->
-    <div class="careers-tabs" role="tablist" aria-label="Career categories">
+    <div class="careers-tabs" role="tablist" aria-label="Filter opportunities by type">
       <button class="career-tab active" data-tab="all" role="tab" aria-selected="true">
-        <i class="fa-solid fa-th-large"></i> All Opportunities <span class="career-count" id="ct-all"></span>
+        <i class="fa-solid fa-th-large"></i> All Opportunities <span class="career-count" id="ct-all">0</span>
       </button>
       <button class="career-tab" data-tab="job" role="tab" aria-selected="false">
-        <i class="fa-solid fa-hospital-user"></i> Job Offers <span class="career-count" id="ct-job"></span>
+        <i class="fa-solid fa-hospital-user"></i> Job Offers <span class="career-count" id="ct-job">0</span>
       </button>
       <button class="career-tab" data-tab="intern" role="tab" aria-selected="false">
-        <i class="fa-solid fa-graduation-cap"></i> Internships <span class="career-count" id="ct-intern"></span>
+        <i class="fa-solid fa-graduation-cap"></i> Internships <span class="career-count" id="ct-intern">0</span>
       </button>
       <button class="career-tab" data-tab="attach" role="tab" aria-selected="false">
-        <i class="fa-solid fa-certificate"></i> Attachments <span class="career-count" id="ct-attach"></span>
+        <i class="fa-solid fa-certificate"></i> Attachments <span class="career-count" id="ct-attach">0</span>
       </button>
     </div>
 
-    <!-- Listings Grid -->
-    <div class="careers-grid" id="careersGrid"></div>
+    <div class="careers-grid" id="careersGrid" aria-live="polite"></div>
+
     <div class="careers-empty" id="careersEmpty" style="display:none;">
       <i class="fa-solid fa-folder-open"></i>
-      <p>No positions in this category at the moment. Check back soon!</p>
+      <p>No opportunities in this category right now. Please check back soon.</p>
     </div>
   </div>
 </section>
 
 <!-- ── CAREERS APPLICATION MODAL ── -->
 <div class="careers-modal-overlay" id="careersModalOverlay">
-  <div class="careers-modal" id="careersModal">
+  <div class="careers-modal" id="careersModal" role="dialog" aria-modal="true" aria-labelledby="careersModalTitle">
     <div class="careers-modal-header">
       <div>
-        <h3 id="careersModalTitle">Apply for Position</h3>
-        <p id="careersModalMeta"></p>
+        <h3 id="careersModalTitle">Position Title</h3>
+        <p id="careersModalMeta">Job Offer · Department · Type</p>
       </div>
-      <button class="careers-modal-close" id="careersModalClose" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+      <button class="careers-modal-close" id="careersModalClose" aria-label="Close application form">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
     </div>
-    <div id="careersModalBody"></div>
+    <div id="careersModalBody"><!-- populated by script.js --></div>
   </div>
 </div>
+
+<!-- ── SOCIAL ICONS ── -->
+<section class="social-section">
+    <p class="social-label">Follow &amp; Connect</p>
+    <div class="social-container">
+
+        <div class="icon-item">
+            <a href="mailto:info@limurunursinghome.co.ke?subject=Appointment%20Enquiry&body=Hello Limuru Nursing Home would like enquire about appointment." class="icon-box mail" aria-label="Email us">
+                <div class="tooltip">Email Us</div>
+                <i class="fa-solid fa-envelope"></i>
+            </a>
+            <span class="icon-name">Email</span>
+        </div>
+
+        <div class="icon-item">
+            <a href="https://www.facebook.com/limurunursinghome?mibextid=ZbWKwL" target="_blank" rel="noopener" class="icon-box facebook" aria-label="Facebook">
+                <div class="tooltip">Facebook</div>
+                <i class="fa-brands fa-facebook-f"></i>
+            </a>
+            <span class="icon-name">Facebook</span>
+        </div>
+
+        <div class="icon-item">
+            <a href="mailto:limuru.nursinghome@yahoo.com?subject=Appointment%20Enquiry&body=Hello%20Limuru%20Nursing%20Home%2C%0A%0AI%20would%20like%20to%20enquire%20about%20an%20appointment." class="icon-box yahoo" aria-label="Yahoo Mail">
+                <div class="tooltip">Yahoo Mail</div>
+                <i class="fa-brands fa-yahoo"></i>
+            </a>
+            <span class="icon-name">Yahoo</span>
+        </div>
+
+        <div class="icon-item">
+            <a href="https://www.google.com/maps/place/Limuru+Nursing+Home+Ltd+(kwa+patel)/@-1.109015,36.6409022,3a,75y,350.62h,90t/data=!3m7!1e1!3m5!1sxBv9jC7bES55c26MTVx1MQ!2e0!6shttps:%2F%2Fstreetviewpixels-pa.googleapis.com%2Fv1%2Fthumbnail%3Fcb_client%3Dmaps_sv.tactile%26w%3D900%26h%3D600%26pitch%3D0%26panoid%3DxBv9jC7bES55c26MTVx1MQ%26yaw%3D350.62!7i16384!8i8192!4m16!1m8!3m7!1s0x182f27c6164c1141:0xd4df65a4cdc91c42!2sLimuru+Nursing+Home+Ltd+(kwa+patel)!8m2!3d-1.108793!4d36.640887!10e5!16s%2Fg%2F1tmk0_h0!3m6!1s0x182f27c6164c1141:0xd4df65a4cdc91c42!8m2!3d-1.108793!4d36.640887!10e5!16s%2Fg%2F1tmk0_h0?entry=ttu&g_ep=EgoyMDI2MDUyNS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener" class="icon-box location" aria-label="Get Directions">
+                <div class="tooltip">Get Directions</div>
+                <i class="fa-solid fa-location-dot"></i>
+            </a>
+            <span class="icon-name">Location</span>
+        </div>
+
+    </div>
+</section>
 
 <!-- ── STICKY QUICK ACTIONS ── -->
 <div class="quick-actions" aria-label="Quick contact actions">
