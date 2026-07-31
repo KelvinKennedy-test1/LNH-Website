@@ -26,6 +26,33 @@ if (hamburger && navMenu) {
   });
 }
 
+/* ── 2b. DARK MODE TOGGLE ──
+   The <head> of every page runs a tiny inline script (before this file
+   loads) that reads the saved preference and applies data-theme="dark"
+   pre-paint, so there's no flash of the wrong theme. This block just
+   wires up the button so the person can actually switch it, and saves
+   their choice for next time. */
+const themeToggle = document.getElementById('themeToggle');
+if (themeToggle) {
+  const root = document.documentElement;
+  const setPressedState = () => {
+    const isDark = root.getAttribute('data-theme') === 'dark';
+    themeToggle.setAttribute('aria-pressed', isDark);
+    themeToggle.setAttribute('title', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+  };
+  setPressedState();
+  themeToggle.addEventListener('click', () => {
+    const isDark = root.getAttribute('data-theme') === 'dark';
+    if (isDark) {
+      root.removeAttribute('data-theme');
+    } else {
+      root.setAttribute('data-theme', 'dark');
+    }
+    try { localStorage.setItem('lnh-theme', isDark ? 'light' : 'dark'); } catch (e) {}
+    setPressedState();
+  });
+}
+
 /* ── 3. DROPDOWN MENUS ── */
 const dropdowns = document.querySelectorAll('.nav-dropdown');
 dropdowns.forEach(dd => {
@@ -431,6 +458,81 @@ if (apptForm) {
       }
     });
   }
+}
+
+/* ══════════════════════════════════════════
+   ── GENERAL CONTACT FORM (contact.html only) ──
+   Web3Forms → info@limurunursinghome.co.ke
+══════════════════════════════════════════ */
+const contactMessageForm = document.getElementById('contactMessageForm');
+
+if (contactMessageForm) {
+  const CM_WEB3FORMS_KEY = 'ad7c24f9-97ce-45d4-80cf-020a49a083d8';
+  const cmSuccess = document.getElementById('cmSuccess');
+
+  function cmShowFieldError(fieldId, message) {
+    const field = document.getElementById(fieldId);
+    const errEl = document.getElementById('err-' + fieldId);
+    if (field) field.classList.add('invalid');
+    if (errEl) errEl.textContent = message;
+  }
+  function cmClearFieldErrors() {
+    contactMessageForm.querySelectorAll('.field-error').forEach(el => el.textContent = '');
+    contactMessageForm.querySelectorAll('input.invalid, textarea.invalid').forEach(el => el.classList.remove('invalid'));
+  }
+
+  contactMessageForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    cmClearFieldErrors();
+
+    const name    = document.getElementById('cmName').value.trim();
+    const email   = document.getElementById('cmEmail').value.trim();
+    const subject = document.getElementById('cmSubject').value.trim();
+    const message = document.getElementById('cmMessage').value.trim();
+
+    let hasError = false;
+    if (!name)    { cmShowFieldError('cmName', 'Full name is required.'); hasError = true; }
+    if (!email)   { cmShowFieldError('cmEmail', 'Email is required.'); hasError = true; }
+    if (!subject) { cmShowFieldError('cmSubject', 'Please add a subject.'); hasError = true; }
+    if (!message) { cmShowFieldError('cmMessage', 'Please write a message.'); hasError = true; }
+    if (hasError) return;
+
+    const btn = contactMessageForm.querySelector('button[type="submit"]');
+    if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending…'; }
+
+    fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        access_key: CM_WEB3FORMS_KEY,
+        subject: 'Website Contact — ' + subject,
+        'Full Name': name,
+        'Email': email,
+        'Subject': subject,
+        'Message': message
+      })
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          contactMessageForm.style.display = 'none';
+          if (cmSuccess) cmSuccess.style.display = 'flex';
+        } else {
+          throw new Error(data.message || 'Submission failed');
+        }
+      })
+      .catch(err => {
+        console.error('Contact form error:', err);
+        if (btn) { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Send Message'; }
+        const errEl = document.createElement('p');
+        errEl.style.cssText = 'color:#e74c3c;font-size:13px;font-weight:600;margin-top:8px;text-align:center;';
+        errEl.textContent = 'Could not send your message. Please call +254 720 519 777 or email us directly.';
+        const existingErr = contactMessageForm.querySelector('.submit-error');
+        if (existingErr) existingErr.remove();
+        errEl.className = 'submit-error';
+        if (btn) btn.parentNode.insertBefore(errEl, btn.nextSibling);
+      });
+  });
 }
 
 /* ─────────────────────────────────────────
@@ -851,7 +953,8 @@ if (document.getElementById('careersGrid')) {
       const phone = (document.getElementById('careers-phone') || {}).value || '';
       const qual  = (document.getElementById('careers-qual')  || {}).value || '';
       const cover = (document.getElementById('careers-cover') || {}).value || '';
-      const cvFile = document.getElementById('careers-cv');
+      const cvFile    = document.getElementById('careers-cv');
+      const introFile = document.getElementById('careers-intro'); // only present for 'attach' type
 
       const nameTrim = name.trim(), emailTrim = email.trim(), phoneTrim = phone.trim();
 
@@ -866,24 +969,45 @@ if (document.getElementById('careersGrid')) {
         return;
       }
 
+      // 5MB max per file, matching the "max 5MB" note shown in the upload zones
+      const MAX_BYTES = 5 * 1024 * 1024;
+      if (cvFile.files[0].size > MAX_BYTES) {
+        showCareersFormError('Your CV file is larger than 5MB. Please upload a smaller file.');
+        return;
+      }
+      if (introFile && introFile.files[0] && introFile.files[0].size > MAX_BYTES) {
+        showCareersFormError('Your institution letter is larger than 5MB. Please upload a smaller file.');
+        return;
+      }
+
       const submitBtn = document.getElementById('careersSubmitBtn');
       if (submitBtn) { submitBtn.disabled = true; submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending…'; }
 
+      // FormData (not JSON) so the browser actually attaches the uploaded files
+      // to the request instead of silently dropping them.
+      const fd = new FormData();
+      fd.append('access_key', CAREERS_WEB3_KEY);
+      fd.append('subject', 'Career Application – ' + o.title + ' | Limuru Nursing Home');
+      fd.append('Position', o.title);
+      fd.append('Type', o.type === 'job' ? 'Job Offer' : o.type === 'intern' ? 'Internship' : 'Attachment');
+      fd.append('Department', o.dept);
+      fd.append('Applicant Name', nameTrim);
+      fd.append('Email', emailTrim);
+      fd.append('Phone', phoneTrim);
+      fd.append('Qualification', qual);
+      fd.append('Cover Letter', cover || 'Not provided');
+      fd.append('attachment', cvFile.files[0], cvFile.files[0].name);
+      if (introFile && introFile.files[0]) {
+        fd.append('attachment2', introFile.files[0], introFile.files[0].name);
+      }
+
+      // NOTE: do NOT set a Content-Type header here — the browser sets the
+      // correct multipart/form-data boundary automatically when the body is
+      // a FormData instance. Setting it manually breaks the upload.
       fetch('https://api.web3forms.com/submit', {
         method: 'POST',
-        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          access_key: CAREERS_WEB3_KEY,
-          subject: 'Career Application – ' + o.title + ' | Limuru Nursing Home',
-          'Position': o.title,
-          'Type': o.type === 'job' ? 'Job Offer' : o.type === 'intern' ? 'Internship' : 'Attachment',
-          'Department': o.dept,
-          'Applicant Name': nameTrim,
-          'Email': emailTrim,
-          'Phone': phoneTrim,
-          'Qualification': qual,
-          'Cover Letter': cover || 'Not provided'
-        })
+        headers: { 'Accept': 'application/json' },
+        body: fd
       })
         .then(res => res.json())
         .then(data => {
@@ -896,11 +1020,18 @@ if (document.getElementById('careersGrid')) {
         .catch(err => {
           console.error('Career form error:', err);
           if (submitBtn) { submitBtn.disabled = false; submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Submit Application'; }
-          const errMsg = document.createElement('p');
-          errMsg.style.cssText = 'color:#e74c3c;font-size:13px;font-weight:600;padding:8px 1.5rem;text-align:center;';
-          errMsg.textContent = 'Failed to send. Please email info@limurunursinghome.co.ke or call +254 720 519 777.';
-          document.getElementById('careersModalBody').prepend(errMsg);
+          showCareersFormError('Failed to send. Please email info@limurunursinghome.co.ke or call +254 720 519 777.');
         });
+    }
+
+    function showCareersFormError(message) {
+      const existingErr = document.querySelector('.careers-form-error');
+      if (existingErr) existingErr.remove();
+      const errMsg = document.createElement('p');
+      errMsg.className = 'careers-form-error';
+      errMsg.style.cssText = 'color:#e74c3c;font-size:13px;font-weight:600;padding:8px 1.5rem;text-align:center;';
+      errMsg.textContent = message;
+      document.getElementById('careersModalBody').prepend(errMsg);
     }
 
     function showCareersSuccess(name, title, email) {
